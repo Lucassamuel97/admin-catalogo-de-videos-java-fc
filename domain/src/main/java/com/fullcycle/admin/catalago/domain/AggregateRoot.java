@@ -1,8 +1,11 @@
 package com.fullcycle.admin.catalago.domain;
 
-public class AggregateRoot<ID extends Identifier> extends Entity<ID>{
+import com.fullcycle.admin.catalago.domain.validation.ValidationHandler;
+
+public abstract class AggregateRoot<ID extends Identifier> extends Entity<ID> {
 
     protected AggregateRoot(ID id) {
         super(id);
     }
+
 }

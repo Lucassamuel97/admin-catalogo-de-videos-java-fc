@@ -1,7 +1,5 @@
 rootProject.name = 'admin-do-catalago'
 include 'domain'
 include 'application'
-include 'application:infrastructure'
-findProject(':application:infrastructure')?.name = 'infrastructure'
 include 'infrastructure'
 
