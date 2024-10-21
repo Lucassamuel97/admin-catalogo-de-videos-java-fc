@@ -2,6 +2,7 @@ package com.fullcycle.admin.catalago.domain.category.create;
 
 import com.fullcycle.admin.catalago.application.category.create.CreateCategoryCommand;
 import com.fullcycle.admin.catalago.application.category.create.DefaultCreateCategoryUseCase;
+import com.fullcycle.admin.catalago.domain.UseCaseTest;
 import com.fullcycle.admin.catalago.domain.category.CategoryGateway;
 import com.fullcycle.admin.catalago.domain.exceptions.DomainException;
 import org.junit.jupiter.api.Assertions;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CreateCategoryUseCaseTest {
+public class CreateCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultCreateCategoryUseCase useCase;
