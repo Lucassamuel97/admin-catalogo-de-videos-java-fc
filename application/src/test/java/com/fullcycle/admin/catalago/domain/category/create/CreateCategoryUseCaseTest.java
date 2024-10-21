@@ -1,9 +1,13 @@
 package com.fullcycle.admin.catalago.domain.category.create;
 
+import com.fullcycle.admin.catalago.application.category.create.CreateCategoryCommand;
+import com.fullcycle.admin.catalago.application.category.create.DefaultCreateCategoryUseCase;
+import com.fullcycle.admin.catalago.domain.category.CategoryGateway;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+
+import java.util.Objects;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,7 +30,7 @@ public class CreateCategoryUseCaseTest {
         final var aCommand = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
         final CategoryGateway categoryGateway = Mockito.mock(CategoryGateway.class);
 
-        Mockito.when(categoryGateway.create(any()))
+        when(categoryGateway.create(any()))
                 .thenAnswer(returnsFirstArg());
 
         final var useCase = new DefaultCreateCategoryUseCase(categoryGateway);
@@ -34,7 +38,7 @@ public class CreateCategoryUseCaseTest {
 
         // Asserts
         Assertions.assertNotNull(actualOutput);
-        Assertions.assertNotNull(actualOutput.getId());
+        Assertions.assertNotNull(actualOutput.id());
 
         Mockito.verify(categoryGateway, times(1)).create(argThat(aCategory ->
                 Objects.equals(expectedName, aCategory.getName())
