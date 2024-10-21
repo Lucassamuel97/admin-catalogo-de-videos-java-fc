@@ -2,6 +2,7 @@ package com.fullcycle.admin.catalago.application.category.create;
 
 import com.fullcycle.admin.catalago.domain.category.Category;
 import com.fullcycle.admin.catalago.domain.category.CategoryGateway;
+import com.fullcycle.admin.catalago.domain.validation.handler.Notification;
 import com.fullcycle.admin.catalago.domain.validation.handler.ThrowsValidationHandler;
 
 import java.util.Objects;
@@ -23,7 +24,14 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase{
                 aCommand.isActive()
         ) ;
 
-        aCategory.validate(new ThrowsValidationHandler());
+        final var notification = Notification.create();
+
+        aCategory.validate(notification);
+
+
+        if (notification.hasError()){
+
+        }
 
         return CreateCategoryOutput.from(this.categoryGateway.create(aCategory));
     }
