@@ -12,6 +12,8 @@ repositories {
 dependencies {
     implementation(project(":domain"))
 
+    implementation group: 'io.vavr', name: 'vavr', version: '0.10.4'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.11.0'
     testImplementation 'org.junit.jupiter:junit-jupiter'
