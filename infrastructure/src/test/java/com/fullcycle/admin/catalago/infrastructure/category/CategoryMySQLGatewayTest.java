@@ -3,7 +3,7 @@ package com.fullcycle.admin.catalago.infrastructure.category;
 import com.fullcycle.admin.catalago.domain.category.Category;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.category.CategorySearchQuery;
-import com.fullcycle.admin.catalago.infrastructure.MySQLGatewayTest;
+import com.fullcycle.admin.catalago.MySQLGatewayTest;
 import com.fullcycle.admin.catalago.infrastructure.category.persistence.CategoryJpaEntity;
 import com.fullcycle.admin.catalago.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;

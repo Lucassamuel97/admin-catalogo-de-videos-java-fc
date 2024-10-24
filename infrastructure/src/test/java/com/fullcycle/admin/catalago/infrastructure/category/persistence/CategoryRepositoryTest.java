@@ -1,7 +1,7 @@
 package com.fullcycle.admin.catalago.infrastructure.category.persistence;
 
 import com.fullcycle.admin.catalago.domain.category.Category;
-import com.fullcycle.admin.catalago.infrastructure.MySQLGatewayTest;
+import com.fullcycle.admin.catalago.MySQLGatewayTest;
 import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
