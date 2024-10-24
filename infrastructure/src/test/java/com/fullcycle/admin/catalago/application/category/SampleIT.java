@@ -1,4 +1,4 @@
-package com.fullcycle.admin.catalago.application;
+package com.fullcycle.admin.catalago.application.category;
 
 import com.fullcycle.admin.catalago.IntegrationTest;
 import com.fullcycle.admin.catalago.application.category.create.CreateCategoryUseCase;
