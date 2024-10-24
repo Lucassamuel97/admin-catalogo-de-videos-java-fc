@@ -35,6 +35,7 @@ public class UpdateCategoryUseCaseTest extends UseCaseTest {
     @BeforeEach
     void cleanUp(){
         Mockito.reset(categoryGateway);
+        Mockito.clearInvocations(categoryGateway);
     }
 
     // 1. Teste do caminho feliz

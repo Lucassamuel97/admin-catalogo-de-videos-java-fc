@@ -122,4 +122,43 @@ public class ListCategoriesUseCaseTest {
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
     }
+
+    @Test
+    public void givenAValidQueryWithDescDirection_whenCallsListCategories_thenShouldReturnCategoriesInDescendingOrder() {
+        final var categories = List.of(
+                Category.newCategory("Filmes", null, true),
+                Category.newCategory("Series", null, true)
+        );
+
+        final var expectedPage = 0;
+        final var expectedPerPage = 10;
+        final var expectedTerms = "";
+        final var expectedSort = "createdAt";
+        final var expectedDirection = "desc"; // Direção "desc"
+        final var expectedItemsCount = 2;
+
+        final var aQuery =
+                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+
+        final var sortedCategories = List.of(
+                Category.newCategory("Series", null, true),
+                Category.newCategory("Filmes", null, true)
+        );
+
+        final var expectedPagination =
+                new Pagination<>(expectedPage, expectedPerPage, sortedCategories.size(), sortedCategories);
+
+        final var expectedResult = expectedPagination.map(CategoryListOutput::from);
+
+        when(categoryGateway.findAll(eq(aQuery)))
+                .thenReturn(expectedPagination);
+
+        final var actualResult = useCase.execute(aQuery);
+
+        Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
+        Assertions.assertEquals(expectedResult, actualResult);
+        Assertions.assertEquals(expectedPage, actualResult.currentPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
+        Assertions.assertEquals(sortedCategories.size(), actualResult.total());
+    }
 }
