@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullcycle.admin.catalago.ControllerTest;
 import com.fullcycle.admin.catalago.application.category.create.CreateCategoryOutput;
 import com.fullcycle.admin.catalago.application.category.create.CreateCategoryUseCase;
-import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryApiInput;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+
 import java.util.Objects;
 
 import static io.vavr.API.Right;
@@ -21,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ControllerTest(controllers = CategoryAPI.class)
 public class CategoryAPITest {
@@ -45,7 +47,7 @@ public class CategoryAPITest {
                 new CreateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
 
         when(createCategoryUseCase.execute(any()))
-                .thenReturn(Right(CreateCategoryOutput.from(CategoryID.from("123")));
+                .thenReturn(Right(CreateCategoryOutput.from("123")));
 
         // when
         final var request = MockMvcRequestBuilders.post("/categories")
@@ -54,17 +56,17 @@ public class CategoryAPITest {
 
         final var response = this.mvc.perform(request)
                 .andDo(print())
-                .andExpectAll(
-                        MockMvcResultMatchers.status().isCreated(),
-                        header().string("Location", "/categories/123")
-                );
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(header().string("Location", "/categories/123"))
+                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.id", Matchers.equalTo("123")));
 
         // then
 
         verify(createCategoryUseCase, times(1)).execute(argThat(cmd ->
                 Objects.equals(expectedName, cmd.name())
-                && Objects.equals(expectedDescription, cmd.description())
-                && Objects.equals(expectedIsActive, cmd.isActive())
+                        && Objects.equals(expectedDescription, cmd.description())
+                        && Objects.equals(expectedIsActive, cmd.isActive())
         ));
     }
 
