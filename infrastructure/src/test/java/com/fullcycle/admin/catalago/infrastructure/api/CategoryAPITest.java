@@ -6,6 +6,7 @@ import com.fullcycle.admin.catalago.application.category.create.CreateCategoryOu
 import com.fullcycle.admin.catalago.application.category.create.CreateCategoryUseCase;
 import com.fullcycle.admin.catalago.application.category.retrieve.get.CategoryOutput;
 import com.fullcycle.admin.catalago.application.category.retrieve.get.GetCategoryByIdUseCase;
+import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.exceptions.DomainException;
 import com.fullcycle.admin.catalago.domain.category.Category;
 import com.fullcycle.admin.catalago.domain.validation.handler.Notification;
@@ -187,6 +188,30 @@ public class CategoryAPITest {
                 .andExpect(jsonPath("$.deleted_at", Matchers.equalTo(aCategory.getDeletedAt())));
 
         verify(getCategoryByIdUseCase, times(1)).execute(eq(expectedId));
+    }
+
+    @Test
+    public void givenAInvalidId_whenCallsGetCategory_shouldReturnNotFound() throws Exception {
+        // given
+        final var expectedErrorMessage = "Category with ID 123 was not found";
+        final var expectedId = CategoryID.from("123");
+
+        when(getCategoryByIdUseCase.execute(any()))
+                .thenThrow(DomainException.with(
+                        new Error("Category with ID %s was not found".formatted(expectedId))
+                ));
+
+        // when
+        final var request = MockMvcRequestBuilders.get("/categories/{id}", expectedId.getValue())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        final var response = this.mvc.perform(request)
+                .andDo(print());
+
+        // then
+        response.andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(jsonPath("$.message", Matchers.equalTo(expectedErrorMessage)));
     }
 
 }
