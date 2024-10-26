@@ -9,6 +9,7 @@ import com.fullcycle.admin.catalago.application.category.retrieve.get.GetCategor
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.exceptions.DomainException;
 import com.fullcycle.admin.catalago.domain.category.Category;
+import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import com.fullcycle.admin.catalago.domain.validation.handler.Notification;
 import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryApiInput;
 import org.hamcrest.Matchers;
@@ -197,9 +198,7 @@ public class CategoryAPITest {
         final var expectedId = CategoryID.from("123");
 
         when(getCategoryByIdUseCase.execute(any()))
-                .thenThrow(DomainException.with(
-                        new Error("Category with ID %s was not found".formatted(expectedId))
-                ));
+                .thenThrow(NotFoundException.with(Category.class,expectedId));
 
         // when
         final var request = MockMvcRequestBuilders.get("/categories/{id}", expectedId.getValue())

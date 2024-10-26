@@ -1,4 +1,4 @@
-package com.fullcycle.admin.catalago.domain.category.delete;
+package com.fullcycle.admin.catalago.application.category.delete;
 
 import com.fullcycle.admin.catalago.application.category.delete.DefaultDeleteCategoryUseCase;
 import com.fullcycle.admin.catalago.domain.category.Category;
