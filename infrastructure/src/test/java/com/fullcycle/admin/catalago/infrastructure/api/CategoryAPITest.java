@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullcycle.admin.catalago.ControllerTest;
 import com.fullcycle.admin.catalago.application.category.create.CreateCategoryOutput;
 import com.fullcycle.admin.catalago.application.category.create.CreateCategoryUseCase;
+import com.fullcycle.admin.catalago.application.category.delete.DeleteCategoryUseCase;
 import com.fullcycle.admin.catalago.application.category.retrieve.get.CategoryOutput;
 import com.fullcycle.admin.catalago.application.category.retrieve.get.GetCategoryByIdUseCase;
+import com.fullcycle.admin.catalago.application.category.retrieve.list.CategoryListOutput;
 import com.fullcycle.admin.catalago.application.category.update.UpdateCategoryCommand;
 import com.fullcycle.admin.catalago.application.category.update.UpdateCategoryOutput;
 import com.fullcycle.admin.catalago.application.category.update.UpdateCategoryUseCase;
@@ -53,6 +55,9 @@ public class CategoryAPITest {
 
     @MockBean
     private UpdateCategoryUseCase updateCategoryUseCase;
+
+    @MockBean
+    private DeleteCategoryUseCase deleteCategoryUseCase;
 
     @Test
     public void givenAValidCommand_whenCallsCreateCategory_shouldReturnCategoryId() throws Exception {
@@ -331,5 +336,26 @@ public class CategoryAPITest {
         ));
     }
 
+    @Test
+    public void givenAValidId_whenCallsDeleteCategory_shouldReturnNoContent() throws Exception {
+        // given
+        final var expectedId = "123";
+
+        doNothing()
+                .when(deleteCategoryUseCase).execute(any());
+
+        // when
+        final var request = MockMvcRequestBuilders.delete("/categories/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        final var response = this.mvc.perform(request)
+                .andDo(print());
+
+        // then
+        response.andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        verify(deleteCategoryUseCase, times(1)).execute(eq(expectedId));
+    }
 
 }
