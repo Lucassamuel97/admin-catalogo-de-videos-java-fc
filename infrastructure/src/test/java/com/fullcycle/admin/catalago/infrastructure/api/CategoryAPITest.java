@@ -17,7 +17,7 @@ import com.fullcycle.admin.catalago.domain.category.Category;
 import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
 import com.fullcycle.admin.catalago.domain.validation.handler.Notification;
-import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryApiInput;
+import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryRequest;
 import com.fullcycle.admin.catalago.infrastructure.category.models.UpdateCategoryRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -72,7 +72,7 @@ public class CategoryAPITest {
         final var expectedIsActive = true;
 
         final var aInput =
-                new CreateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+                new CreateCategoryRequest(expectedName, expectedDescription, expectedIsActive);
 
         when(createCategoryUseCase.execute(any()))
                 .thenReturn(Right(CreateCategoryOutput.from("123")));
@@ -107,7 +107,7 @@ public class CategoryAPITest {
         final var expectedMessage = "'name' should not be null";
 
         final var aInput =
-                new CreateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+                new CreateCategoryRequest(expectedName, expectedDescription, expectedIsActive);
 
         when(createCategoryUseCase.execute(any()))
                 .thenReturn(Left(Notification.create(new Error(expectedMessage))));
@@ -143,7 +143,7 @@ public class CategoryAPITest {
         final var expectedMessage = "'name' should not be null";
 
         final var aInput =
-                new CreateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+                new CreateCategoryRequest(expectedName, expectedDescription, expectedIsActive);
 
         when(createCategoryUseCase.execute(any()))
                 .thenThrow(DomainException.with(new Error(expectedMessage)));

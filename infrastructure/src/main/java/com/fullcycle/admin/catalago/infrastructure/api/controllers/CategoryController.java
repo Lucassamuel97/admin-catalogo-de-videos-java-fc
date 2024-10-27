@@ -13,8 +13,9 @@ import com.fullcycle.admin.catalago.domain.category.CategorySearchQuery;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
 import com.fullcycle.admin.catalago.domain.validation.handler.Notification;
 import com.fullcycle.admin.catalago.infrastructure.api.CategoryAPI;
-import com.fullcycle.admin.catalago.infrastructure.category.models.CategoryApiOutput;
-import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryApiInput;
+import com.fullcycle.admin.catalago.infrastructure.category.models.CategoryListResponse;
+import com.fullcycle.admin.catalago.infrastructure.category.models.CategoryResponse;
+import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryRequest;
 import com.fullcycle.admin.catalago.infrastructure.category.models.UpdateCategoryRequest;
 import com.fullcycle.admin.catalago.infrastructure.category.presenters.CategoryApiPresenter;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class CategoryController implements CategoryAPI {
     }
 
     @Override
-    public ResponseEntity<?> createCategory(final CreateCategoryApiInput input){
+    public ResponseEntity<?> createCategory(final CreateCategoryRequest input){
         final var aCommand = CreateCategoryCommand.with(
                 input.name(),
                 input.description(),
@@ -66,18 +67,19 @@ public class CategoryController implements CategoryAPI {
     }
 
     @Override
-    public Pagination<?> listCategories(
+    public Pagination<CategoryListResponse> listCategories(
             final String search,
             final int page,
             final int perPage,
             final String sort,
             final String direction
     ) {
-        return listCategoriesUseCase.execute(new CategorySearchQuery(page, perPage, search, sort, direction));
+        return listCategoriesUseCase.execute(new CategorySearchQuery(page, perPage, search, sort, direction))
+                .map(CategoryApiPresenter::present);
     }
 
     @Override
-    public CategoryApiOutput getById(String id) {
+    public CategoryResponse getById(String id) {
         return CategoryApiPresenter.present(this.getCategoryByIdUseCase.execute(id));
     }
 
