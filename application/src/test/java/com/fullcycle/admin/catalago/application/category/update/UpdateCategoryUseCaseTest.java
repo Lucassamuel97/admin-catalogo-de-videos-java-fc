@@ -1,14 +1,11 @@
-package com.fullcycle.admin.catalago.domain.category.update;
+package com.fullcycle.admin.catalago.application.category.update;
 
-import com.fullcycle.admin.catalago.application.category.update.DefaultUpdateCategoryUseCase;
-import com.fullcycle.admin.catalago.application.category.update.UpdateCategoryCommand;
-import com.fullcycle.admin.catalago.domain.UseCaseTest;
+import com.fullcycle.admin.catalago.application.UseCaseTest;
 import com.fullcycle.admin.catalago.domain.category.Category;
 import com.fullcycle.admin.catalago.domain.category.CategoryGateway;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
-import com.fullcycle.admin.catalago.domain.exceptions.DomainException;
+import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,23 +24,23 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UpdateCategoryUseCaseTest extends UseCaseTest {
+
     @InjectMocks
     private DefaultUpdateCategoryUseCase useCase;
 
     @Mock
     private CategoryGateway categoryGateway;
 
-    @BeforeEach
-    void cleanUp(){
-        Mockito.reset(categoryGateway);
-        Mockito.clearInvocations(categoryGateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(categoryGateway);
     }
 
     // 1. Teste do caminho feliz
-    // 2. teste passando propriedade invalida (name)
+    // 2. Teste passando uma propriedade inválida (name)
     // 3. Teste atualizando uma categoria para inativa
-    // 4. Teste simulando um erro genereico vindo do gateway
-    // 5. teste atualizar categoria passando ID invalido
+    // 4. Teste simulando um erro generico vindo do gateway
+    // 5. Teste atualizar categoria passando ID inválido
 
     @Test
     public void givenAValidCommand_whenCallsUpdateCategory_shouldReturnCategoryId() {
@@ -157,6 +155,7 @@ public class UpdateCategoryUseCaseTest extends UseCaseTest {
                                 && Objects.nonNull(aUpdatedCategory.getDeletedAt())
         ));
     }
+
     @Test
     public void givenAValidCommand_whenGatewayThrowsRandomException_shouldReturnAException() {
         final var aCategory =
@@ -205,7 +204,6 @@ public class UpdateCategoryUseCaseTest extends UseCaseTest {
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = false;
         final var expectedId = "123";
-        final var expectedErrorCount = 1;
         final var expectedErrorMessage = "Category with ID 123 was not found";
 
         final var aCommand = UpdateCategoryCommand.with(
@@ -219,11 +217,9 @@ public class UpdateCategoryUseCaseTest extends UseCaseTest {
                 .thenReturn(Optional.empty());
 
         final var actualException =
-                Assertions.assertThrows(DomainException.class, () -> useCase.execute(aCommand));
+                Assertions.assertThrows(NotFoundException.class, () -> useCase.execute(aCommand));
 
-
-        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
         Mockito.verify(categoryGateway, times(1)).findById(eq(CategoryID.from(expectedId)));
 

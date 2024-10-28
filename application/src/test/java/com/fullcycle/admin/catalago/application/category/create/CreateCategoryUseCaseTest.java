@@ -1,8 +1,6 @@
-package com.fullcycle.admin.catalago.domain.category.create;
+package com.fullcycle.admin.catalago.application.category.create;
 
-import com.fullcycle.admin.catalago.application.category.create.CreateCategoryCommand;
-import com.fullcycle.admin.catalago.application.category.create.DefaultCreateCategoryUseCase;
-import com.fullcycle.admin.catalago.domain.UseCaseTest;
+import com.fullcycle.admin.catalago.application.UseCaseTest;
 import com.fullcycle.admin.catalago.domain.category.CategoryGateway;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -30,9 +29,9 @@ public class CreateCategoryUseCaseTest extends UseCaseTest {
     @Mock
     private CategoryGateway categoryGateway;
 
-    @BeforeEach
-    void cleanUp(){
-        Mockito.reset(categoryGateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(categoryGateway);
     }
 
     // 1. Teste do caminho feliz

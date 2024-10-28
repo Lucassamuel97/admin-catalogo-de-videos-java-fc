@@ -1,4 +1,4 @@
-package com.fullcycle.admin.catalago.domain.category.retrieve.list;
+package com.fullcycle.admin.catalago.application.category.retrieve.list;
 
 import com.fullcycle.admin.catalago.application.category.retrieve.list.CategoryListOutput;
 import com.fullcycle.admin.catalago.application.category.retrieve.list.DefaultListCategoriesUseCase;
