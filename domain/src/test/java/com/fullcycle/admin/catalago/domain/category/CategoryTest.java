@@ -1,7 +1,5 @@
-package com.fullcycle.admin.catalago.domain.categoy;
+package com.fullcycle.admin.catalago.domain.category;
 
-
-import com.fullcycle.admin.catalago.domain.category.Category;
 
 import com.fullcycle.admin.catalago.domain.exceptions.DomainException;
 import com.fullcycle.admin.catalago.domain.validation.handler.ThrowsValidationHandler;
