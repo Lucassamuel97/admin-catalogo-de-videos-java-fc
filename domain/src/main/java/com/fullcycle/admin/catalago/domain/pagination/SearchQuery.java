@@ -1,6 +1,6 @@
-package com.fullcycle.admin.catalago.domain.category;
+package com.fullcycle.admin.catalago.domain.pagination;
 
-public record CategorySearchQuery(
+public record SearchQuery(
         int page,
         int perPage,
         String terms,
