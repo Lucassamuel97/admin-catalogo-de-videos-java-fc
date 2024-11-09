@@ -77,4 +77,8 @@ public class UpdateGenreUseCaseTest extends UseCaseTest {
                         && Objects.isNull(aUpdatedGenre.getDeletedAt())
         ));
     }
+
+    private List<String> asString(final List<CategoryID> ids){
+        return ids.stream().map(CategoryID::getValue).toList();
+    }
 }
