@@ -1,6 +1,5 @@
-package com.fullcycle.admin.catalago.application.genre.retrieve;
+package com.fullcycle.admin.catalago.application.genre.retrieve.get;
 
-import com.fullcycle.admin.catalago.application.genre.retrieve.get.DefaultGetGenreByIdUseCase;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import com.fullcycle.admin.catalago.domain.genre.Genre;
