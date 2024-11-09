@@ -1,35 +1,31 @@
 package com.fullcycle.admin.catalago.application.category.retrieve.get;
 
-import com.fullcycle.admin.catalago.application.category.retrieve.get.DefaultGetCategoryByIdUseCase;
+import com.fullcycle.admin.catalago.application.UseCaseTest;
 import com.fullcycle.admin.catalago.domain.category.Category;
 import com.fullcycle.admin.catalago.domain.category.CategoryGateway;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
-import com.fullcycle.admin.catalago.domain.exceptions.DomainException;
 import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-public class GetCategoryByIdUseCaseTest {
+public class GetCategoryByIdUseCaseTest extends UseCaseTest {
     @InjectMocks
     private DefaultGetCategoryByIdUseCase useCase;
 
     @Mock
     private CategoryGateway categoryGateway;
 
-    @BeforeEach
-    void cleanUp(){
-        Mockito.reset(categoryGateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(categoryGateway);
     }
 
     // 1. Teste caminho feliz
