@@ -20,7 +20,6 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
-
 public class CreateGenreUseCaseTest extends UseCaseTest {
 
     @InjectMocks
