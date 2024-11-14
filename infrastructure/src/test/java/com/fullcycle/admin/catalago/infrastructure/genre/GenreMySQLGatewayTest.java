@@ -2,6 +2,7 @@ package com.fullcycle.admin.catalago.infrastructure.genre;
 
 import com.fullcycle.admin.catalago.MySQLGatewayTest;
 import com.fullcycle.admin.catalago.domain.category.Category;
+import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.genre.Genre;
 import com.fullcycle.admin.catalago.infrastructure.category.CategoryMySQLGateway;
 import com.fullcycle.admin.catalago.infrastructure.genre.persistence.GenreRepository;
@@ -113,4 +114,5 @@ public class GenreMySQLGatewayTest {
         Assertions.assertEquals(aGenre.getUpdatedAt(), persistedGenre.getUpdatedAt());
         Assertions.assertEquals(aGenre.getDeletedAt(), persistedGenre.getDeletedAt());
         Assertions.assertNull(persistedGenre.getDeletedAt());
+    }
 }
