@@ -158,6 +158,10 @@ public class GenreMySQLGatewayTest {
         Assertions.assertIterableEquals(sorted(expectedCategories), sorted(actualGenre.getCategories()));
         Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
         Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(actualGenre.getUpdatedAt()));
+
+        System.out.println("aGenre UpdatedAt: " + aGenre.getUpdatedAt());
+        System.out.println("actualGenre UpdatedAt: " + actualGenre.getUpdatedAt());
+
         Assertions.assertEquals(aGenre.getDeletedAt(), actualGenre.getDeletedAt());
 
         final var persistedGenre = genreRepository.findById(expectedId.getValue()).get();
@@ -257,6 +261,10 @@ public class GenreMySQLGatewayTest {
         Assertions.assertEquals(expectedCategories, actualGenre.getCategories());
         Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
         Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(actualGenre.getUpdatedAt()));
+
+        System.out.println("aGenre UpdatedAt: " + aGenre.getUpdatedAt());
+        System.out.println("actualGenre UpdatedAt: " + actualGenre.getUpdatedAt());
+
         Assertions.assertNull(actualGenre.getDeletedAt());
 
         final var persistedGenre = genreRepository.findById(expectedId.getValue()).get();
@@ -430,7 +438,7 @@ public class GenreMySQLGatewayTest {
             final int expectedItemsCount,
             final long expectedTotal,
             final String expectedGenreName
-    ) {
+    ) throws InterruptedException {
         // given
         mockGenres();
         final var expectedSort = "name";
@@ -465,7 +473,7 @@ public class GenreMySQLGatewayTest {
             final int expectedItemsCount,
             final long expectedTotal,
             final String expectedGenreName
-    ) {
+    ) throws InterruptedException {
         // given
         mockGenres();
         final var expectedTerms = "";
@@ -496,7 +504,7 @@ public class GenreMySQLGatewayTest {
             final int expectedItemsCount,
             final long expectedTotal,
             final String expectedGenres
-    ) {
+    ) throws InterruptedException {
         // given
         mockGenres();
         final var expectedTerms = "";
@@ -523,14 +531,16 @@ public class GenreMySQLGatewayTest {
         }
     }
 
-    private void mockGenres() {
-        genreRepository.saveAllAndFlush(List.of(
-                GenreJpaEntity.from(Genre.newGenre("Comédia romântica", true)),
-                GenreJpaEntity.from(Genre.newGenre("Ação", true)),
-                GenreJpaEntity.from(Genre.newGenre("Drama", true)),
-                GenreJpaEntity.from(Genre.newGenre("Terror", true)),
-                GenreJpaEntity.from(Genre.newGenre("Ficção científica", true))
-        ));
+    private void mockGenres() throws InterruptedException {
+        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Comédia romântica", true)));
+        Thread.sleep(10); // 10ms de intervalo
+        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Ação", true)));
+        Thread.sleep(10);
+        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Drama", true)));
+        Thread.sleep(10);
+        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Terror", true)));
+        Thread.sleep(10);
+        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Ficção científica", true)));
     }
 
     private List<CategoryID> sorted(final List<CategoryID> expectedCategories) {
