@@ -1,18 +1,19 @@
 package com.fullcycle.admin.catalago.infrastructure.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullcycle.admin.catalago.ControllerTest;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreOutput;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreUseCase;
 import com.fullcycle.admin.catalago.domain.exceptions.NotificationException;
 import com.fullcycle.admin.catalago.domain.validation.handler.Notification;
+
+import com.fullcycle.admin.catalago.infrastructure.genre.models.CreateGenreRequest;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.fullcycle.admin.catalago.infrastructure.genre.models.CreateGenreRequest;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.Objects;
