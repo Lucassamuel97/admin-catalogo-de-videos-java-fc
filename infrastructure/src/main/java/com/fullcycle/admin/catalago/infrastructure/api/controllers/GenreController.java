@@ -2,6 +2,7 @@ package com.fullcycle.admin.catalago.infrastructure.api.controllers;
 
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreCommand;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreUseCase;
+import com.fullcycle.admin.catalago.application.genre.delete.DeleteGenreUseCase;
 import com.fullcycle.admin.catalago.application.genre.retrieve.get.GetGenreByIdUseCase;
 import com.fullcycle.admin.catalago.application.genre.update.UpdateGenreCommand;
 import com.fullcycle.admin.catalago.application.genre.update.UpdateGenreUseCase;
@@ -23,15 +24,18 @@ public class GenreController implements GenreAPI {
     private final CreateGenreUseCase createGenreUseCase;
     private final GetGenreByIdUseCase getGenreByIdUseCase;
     private final UpdateGenreUseCase updateGenreUseCase;
+    private final DeleteGenreUseCase deleteGenreUseCase;
 
     public GenreController(
             CreateGenreUseCase createGenreUseCase,
             GetGenreByIdUseCase getGenreByIdUseCase,
-            UpdateGenreUseCase updateGenreUseCase
+            UpdateGenreUseCase updateGenreUseCase,
+            DeleteGenreUseCase deleteGenreUseCase
     ) {
         this.createGenreUseCase = createGenreUseCase;
         this.getGenreByIdUseCase = getGenreByIdUseCase;
         this.updateGenreUseCase = updateGenreUseCase;
+        this.deleteGenreUseCase = deleteGenreUseCase;
     }
 
     @Override
@@ -72,7 +76,7 @@ public class GenreController implements GenreAPI {
     }
 
     @Override
-    public void deleteById(String id) {
-
+    public void deleteById(final String id) {
+        this.deleteGenreUseCase.execute(id);
     }
 }
