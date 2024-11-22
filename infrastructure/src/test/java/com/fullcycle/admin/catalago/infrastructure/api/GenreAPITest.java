@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullcycle.admin.catalago.ControllerTest;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreOutput;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreUseCase;
+import com.fullcycle.admin.catalago.application.genre.delete.DeleteGenreUseCase;
 import com.fullcycle.admin.catalago.application.genre.retrieve.get.GenreOutput;
 import com.fullcycle.admin.catalago.application.genre.update.UpdateGenreOutput;
 import com.fullcycle.admin.catalago.application.genre.update.UpdateGenreUseCase;
@@ -52,6 +53,9 @@ public class GenreAPITest {
 
     @MockBean
     private UpdateGenreUseCase updateGenreUseCase;
+
+    @MockBean
+    private DeleteGenreUseCase deleteGenreUseCase;
 
     @Test
     public void givenAValidCommand_whenCallsCreateGenre_shouldReturnGenreId() throws Exception {
@@ -260,5 +264,25 @@ public class GenreAPITest {
                         && Objects.equals(expectedCategories, cmd.categories())
                         && Objects.equals(expectedIsActive, cmd.isActive())
         ));
+    }
+
+    @Test
+    public void givenAValidId_whenCallsDeleteGenre_shouldBeOK() throws Exception {
+        // given
+        final var expectedId = "123";
+
+        doNothing()
+                .when(deleteGenreUseCase).execute(any());
+
+        // when
+        final var aRequest = delete("/genres/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON);
+
+        final var result = this.mvc.perform(aRequest);
+
+        // then
+        result.andExpect(status().isNoContent());
+
+        verify(deleteGenreUseCase).execute(eq(expectedId));
     }
 }
