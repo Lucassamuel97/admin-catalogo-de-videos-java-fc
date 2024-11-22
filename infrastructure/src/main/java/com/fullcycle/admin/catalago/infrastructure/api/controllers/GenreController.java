@@ -3,6 +3,8 @@ package com.fullcycle.admin.catalago.infrastructure.api.controllers;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreCommand;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreUseCase;
 import com.fullcycle.admin.catalago.application.genre.retrieve.get.GetGenreByIdUseCase;
+import com.fullcycle.admin.catalago.application.genre.update.UpdateGenreCommand;
+import com.fullcycle.admin.catalago.application.genre.update.UpdateGenreUseCase;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
 import com.fullcycle.admin.catalago.infrastructure.api.GenreAPI;
 import com.fullcycle.admin.catalago.infrastructure.genre.models.CreateGenreRequest;
@@ -20,13 +22,16 @@ public class GenreController implements GenreAPI {
 
     private final CreateGenreUseCase createGenreUseCase;
     private final GetGenreByIdUseCase getGenreByIdUseCase;
+    private final UpdateGenreUseCase updateGenreUseCase;
 
     public GenreController(
             CreateGenreUseCase createGenreUseCase,
-            GetGenreByIdUseCase getGenreByIdUseCase
+            GetGenreByIdUseCase getGenreByIdUseCase,
+            UpdateGenreUseCase updateGenreUseCase
     ) {
         this.createGenreUseCase = createGenreUseCase;
         this.getGenreByIdUseCase = getGenreByIdUseCase;
+        this.updateGenreUseCase = updateGenreUseCase;
     }
 
     @Override
@@ -53,8 +58,17 @@ public class GenreController implements GenreAPI {
     }
 
     @Override
-    public ResponseEntity<?> updateById(String id, UpdateGenreRequest input) {
-        return null;
+    public ResponseEntity<?> updateById(final String id, final UpdateGenreRequest input) {
+        final var aCommand = UpdateGenreCommand.with(
+                id,
+                input.name(),
+                input.isActive(),
+                input.categories()
+        );
+
+        final var output = this.updateGenreUseCase.execute(aCommand);
+
+        return ResponseEntity.ok(output);
     }
 
     @Override
