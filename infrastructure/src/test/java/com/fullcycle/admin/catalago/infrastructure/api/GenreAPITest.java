@@ -4,8 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullcycle.admin.catalago.ControllerTest;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreOutput;
 import com.fullcycle.admin.catalago.application.genre.create.CreateGenreUseCase;
+import com.fullcycle.admin.catalago.application.genre.retrieve.get.GenreOutput;
+import com.fullcycle.admin.catalago.domain.category.CategoryID;
+import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import com.fullcycle.admin.catalago.domain.exceptions.NotificationException;
 import com.fullcycle.admin.catalago.domain.validation.handler.Notification;
+import com.fullcycle.admin.catalago.domain.genre.Genre;
+import com.fullcycle.admin.catalago.domain.genre.GenreID;
+import com.fullcycle.admin.catalago.application.genre.retrieve.get.GetGenreByIdUseCase;
 
 import com.fullcycle.admin.catalago.infrastructure.genre.models.CreateGenreRequest;
 
@@ -37,6 +43,9 @@ public class GenreAPITest {
 
     @MockBean
     private CreateGenreUseCase createGenreUseCase;
+
+    @MockBean
+    private GetGenreByIdUseCase getGenreByIdUseCase;
 
     @Test
     public void givenAValidCommand_whenCallsCreateGenre_shouldReturnGenreId() throws Exception {
@@ -107,5 +116,69 @@ public class GenreAPITest {
                         && Objects.equals(expectedCategories, cmd.categories())
                         && Objects.equals(expectedIsActive, cmd.isActive())
         ));
+    }
+
+    @Test
+    public void givenAValidId_whenCallsGetGenreById_shouldReturnGenre() throws Exception {
+        // given
+        final var expectedName = "Ação";
+        final var expectedCategories = List.of("123", "456");
+        final var expectedIsActive = false;
+
+        final var aGenre = Genre.newGenre(expectedName, expectedIsActive)
+                .addCategories(
+                        expectedCategories.stream()
+                                .map(CategoryID::from)
+                                .toList()
+                );
+
+        final var expectedId = aGenre.getId().getValue();
+
+        when(getGenreByIdUseCase.execute(any()))
+                .thenReturn(GenreOutput.from(aGenre));
+
+        // when
+        final var aRequest = get("/genres/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        final var response = this.mvc.perform(aRequest);
+
+        // then
+        response.andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.id", equalTo(expectedId)))
+                .andExpect(jsonPath("$.name", equalTo(expectedName)))
+                .andExpect(jsonPath("$.categories_id", equalTo(expectedCategories)))
+                .andExpect(jsonPath("$.is_active", equalTo(expectedIsActive)))
+                .andExpect(jsonPath("$.created_at", equalTo(aGenre.getCreatedAt().toString())))
+                .andExpect(jsonPath("$.updated_at", equalTo(aGenre.getUpdatedAt().toString())))
+                .andExpect(jsonPath("$.deleted_at", equalTo(aGenre.getDeletedAt().toString())));
+
+        verify(getGenreByIdUseCase).execute(eq(expectedId));
+    }
+
+    @Test
+    public void givenAnInvalidId_whenCallsGetGenreById_shouldReturnNotFound() throws Exception {
+        // given
+        final var expectedErrorMessage = "Genre with ID 123 was not found";
+        final var expectedId = GenreID.from("123");
+
+        when(getGenreByIdUseCase.execute(any()))
+                .thenThrow(NotFoundException.with(Genre.class, expectedId));
+
+        // when
+        final var aRequest = get("/genres/{id}", expectedId.getValue())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        final var response = this.mvc.perform(aRequest);
+
+        // then
+        response.andExpect(status().isNotFound())
+                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
+
+        verify(getGenreByIdUseCase).execute(eq(expectedId.getValue()));
     }
 }
