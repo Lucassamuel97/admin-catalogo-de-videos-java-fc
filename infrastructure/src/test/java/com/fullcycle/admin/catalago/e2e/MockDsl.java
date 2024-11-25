@@ -8,6 +8,7 @@ import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategor
 import com.fullcycle.admin.catalago.infrastructure.category.models.UpdateCategoryRequest;
 import com.fullcycle.admin.catalago.infrastructure.configuration.json.Json;
 import com.fullcycle.admin.catalago.infrastructure.genre.models.CreateGenreRequest;
+import com.fullcycle.admin.catalago.infrastructure.genre.models.GenreResponse;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -77,6 +78,10 @@ public interface MockDsl {
 
     default ResultActions listGenres(final int page, final int perPage, final String search, final String sort, final String direction) throws Exception {
         return this.list("/genres", page, perPage, search, sort, direction);
+    }
+
+    default GenreResponse retrieveAGenre(final GenreID anId) throws Exception {
+        return this.retrieve("/genres/", anId, GenreResponse.class);
     }
 
     /**

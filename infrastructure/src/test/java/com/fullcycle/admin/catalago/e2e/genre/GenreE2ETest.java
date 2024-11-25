@@ -183,4 +183,44 @@ public class GenreE2ETest implements MockDsl {
                 .andExpect(jsonPath("$.items[1].name", equalTo("Drama")))
                 .andExpect(jsonPath("$.items[2].name", equalTo("Ação")));
     }
+
+    @Test
+    public void asACatalogAdminIShouldBeAbleToGetAGenreByItsIdentifier() throws Exception {
+        Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
+        Assertions.assertEquals(0, genreRepository.count());
+
+        final var filmes = givenACategory("Filmes", null, true);
+
+        final var expectedName = "Ação";
+        final var expectedIsActive = true;
+        final var expectedCategories = List.of(filmes);
+
+        final var actualId = givenAGenre(expectedName, expectedIsActive, expectedCategories);
+
+        final var actualGenre = retrieveAGenre(actualId);
+
+        Assertions.assertEquals(expectedName, actualGenre.name());
+        Assertions.assertTrue(
+                expectedCategories.size() == actualGenre.categories().size()
+                        && mapTo(expectedCategories, CategoryID::getValue).containsAll(actualGenre.categories())
+        );
+        Assertions.assertEquals(expectedIsActive, actualGenre.active());
+        Assertions.assertNotNull(actualGenre.createdAt());
+        Assertions.assertNotNull(actualGenre.updatedAt());
+        Assertions.assertNull(actualGenre.deletedAt());
+    }
+
+    @Test
+    public void asACatalogAdminIShouldBeAbleToSeeATreatedErrorByGettingANotFoundGenre() throws Exception {
+        Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
+        Assertions.assertEquals(0, genreRepository.count());
+
+        final var aRequest = get("/genres/123")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        this.mvc.perform(aRequest)
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message", equalTo("Genre with ID 123 was not found")));
+    }
 }
