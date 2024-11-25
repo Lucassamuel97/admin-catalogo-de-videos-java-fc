@@ -2,6 +2,7 @@ package com.fullcycle.admin.catalago.e2e.genre;
 
 import com.fullcycle.admin.catalago.E2ETest;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
+import com.fullcycle.admin.catalago.domain.genre.GenreID;
 import com.fullcycle.admin.catalago.e2e.MockDsl;
 import com.fullcycle.admin.catalago.infrastructure.genre.models.UpdateGenreRequest;
 import com.fullcycle.admin.catalago.infrastructure.genre.persistence.GenreRepository;
@@ -12,21 +13,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
-import java.util.function.Function;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @E2ETest
 @Testcontainers
@@ -323,5 +320,32 @@ public class GenreE2ETest implements MockDsl {
         Assertions.assertNotNull(actualGenre.getCreatedAt());
         Assertions.assertNotNull(actualGenre.getUpdatedAt());
         Assertions.assertNull(actualGenre.getDeletedAt());
+    }
+
+    @Test
+    public void asACatalogAdminIShouldBeAbleToDeleteAGenreByItsIdentifier() throws Exception {
+        Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
+        Assertions.assertEquals(0, genreRepository.count());
+
+        final var filmes = givenACategory("Filmes", null, true);
+
+        final var actualId = givenAGenre("Ação", true, List.of(filmes));
+
+        deleteAGenre(actualId)
+                .andExpect(status().isNoContent());
+
+        Assertions.assertFalse(this.genreRepository.existsById(actualId.getValue()));
+        Assertions.assertEquals(0, genreRepository.count());
+    }
+
+    @Test
+    public void asACatalogAdminIShouldNotSeeAnErrorByDeletingANotExistentGenre() throws Exception {
+        Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
+        Assertions.assertEquals(0, genreRepository.count());
+
+        deleteAGenre(GenreID.from("12313"))
+                .andExpect(status().isNoContent());
+
+        Assertions.assertEquals(0, genreRepository.count());
     }
 }

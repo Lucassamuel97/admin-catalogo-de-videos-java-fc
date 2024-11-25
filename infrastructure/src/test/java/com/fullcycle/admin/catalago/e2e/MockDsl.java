@@ -88,6 +88,10 @@ public interface MockDsl {
     default ResultActions updateAGenre(final GenreID anId, final UpdateGenreRequest aRequest) throws Exception {
         return this.update("/genres/", anId, aRequest);
     }
+
+    default ResultActions deleteAGenre(final GenreID anId) throws Exception {
+        return this.delete("/genres/", anId);
+    }
     /**
      * Utils
      */
