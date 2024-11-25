@@ -96,7 +96,7 @@ public class CastMemberTest {
     }
 
     @Test
-    public void givenAValidCastMember_whenCallUpdate_shouldReceiveUpdated() {
+    public void givenAValidCastMember_whenCallUpdate_shouldReceiveUpdated() throws InterruptedException {
         final var expectedName = "Vin Diesel";
         final var expectedType = CastMemberType.ACTOR;
 
@@ -109,6 +109,8 @@ public class CastMemberTest {
         final var actualID = actualMember.getId();
         final var actualCreatedAt = actualMember.getCreatedAt();
         final var actualUpdatedAt = actualMember.getUpdatedAt();
+
+        Thread.sleep(10);
 
         actualMember.update(expectedName, expectedType);
 
