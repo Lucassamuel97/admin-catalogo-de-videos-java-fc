@@ -2,6 +2,7 @@ package com.fullcycle.admin.catalago.e2e.category;
 
 import com.fullcycle.admin.catalago.E2ETest;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
+import com.fullcycle.admin.catalago.e2e.MockDsl;
 import com.fullcycle.admin.catalago.infrastructure.category.models.CategoryResponse;
 import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryRequest;
 import com.fullcycle.admin.catalago.infrastructure.category.models.UpdateCategoryRequest;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @E2ETest
 @Testcontainers
-public class CategoryE2ETest {
+public class CategoryE2ETest implements MockDsl {
 
     @Autowired
     private MockMvc mvc;
@@ -48,6 +49,11 @@ public class CategoryE2ETest {
         final var mappedPort = MYSQL_CONTAINER.getMappedPort(3306);
         System.out.printf("Container is running on port %s\n", mappedPort );
         registry.add("mysql.port", () -> mappedPort);
+    }
+
+    @Override
+    public MockMvc mvc() {
+        return this.mvc;
     }
 
     @Test
@@ -307,22 +313,6 @@ public class CategoryE2ETest {
                 .andExpect(status().isNoContent());
 
         Assertions.assertEquals(0, categoryRepository.count());
-    }
-
-    private CategoryID givenACategory(final String aName, final String aDescription, final boolean isActive) throws Exception{
-        final var requestBody = new CreateCategoryRequest(aName,aDescription,isActive);
-
-        final var aRequest = MockMvcRequestBuilders.post("/categories")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Json.writeValueAsString(requestBody));
-
-        final var actualId = this.mvc.perform(aRequest)
-                .andExpect(status().isCreated())
-                .andReturn()
-                .getResponse().getHeader("Location")
-                .replace("/categories/","");
-
-        return CategoryID.from(actualId);
     }
 
     private CategoryResponse retrieveACategory(final String anId) throws Exception {
