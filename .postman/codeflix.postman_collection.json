@@ -350,6 +350,134 @@
 							}
 						}
 					]
+				},
+				{
+					"name": "genres",
+					"item": [
+						{
+							"name": "List genre",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/genres",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"genres"
+									]
+								},
+								"description": "list all genres"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Genres",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Ação\",\r\n    \"categories_id\": [\r\n        \"68727f48-e332-45c8-8dd5-552c9fa0982f\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/genres",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"genres"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Genre",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Drama\",\r\n    \"categories_id\": [\r\n        \"68727f48-e332-45c8-8dd5-552c9fa0982f\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/genres/e066b3fc-a3fb-460e-9cdf-a5030f837617",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"genres",
+										"e066b3fc-a3fb-460e-9cdf-a5030f837617"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Genre",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/genres/e066b3fc-a3fb-460e-9cdf-a5030f837617",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"genres",
+										"e066b3fc-a3fb-460e-9cdf-a5030f837617"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Genre",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/genres/e066b3fc-a3fb-460e-9cdf-a5030f837617",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"genres",
+										"e066b3fc-a3fb-460e-9cdf-a5030f837617"
+									]
+								},
+								"description": "deleted genre"
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
@@ -377,11 +505,11 @@
 	"variable": [
 		{
 			"key": "category_name",
-			"value": "Documentário"
+			"value": "Filme"
 		},
 		{
 			"key": "filme_id",
-			"value": "ccc0b8dc-aa5a-40c4-8b22-ea3252a1a678"
+			"value": "68727f48-e332-45c8-8dd5-552c9fa0982f"
 		},
 		{
 			"key": "action_id",
@@ -390,6 +518,14 @@
 		{
 			"key": "vin_diesel_id",
 			"value": ""
+		},
+		{
+			"key": "Genero ação",
+			"value": "gene"
+		},
+		{
+			"key": "Genero ação",
+			"value": "genre_name"
 		}
 	]
 }
