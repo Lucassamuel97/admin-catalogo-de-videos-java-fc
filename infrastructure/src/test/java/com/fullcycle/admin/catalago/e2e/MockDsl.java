@@ -9,6 +9,7 @@ import com.fullcycle.admin.catalago.infrastructure.category.models.UpdateCategor
 import com.fullcycle.admin.catalago.infrastructure.configuration.json.Json;
 import com.fullcycle.admin.catalago.infrastructure.genre.models.CreateGenreRequest;
 import com.fullcycle.admin.catalago.infrastructure.genre.models.GenreResponse;
+import com.fullcycle.admin.catalago.infrastructure.genre.models.UpdateGenreRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -84,6 +85,9 @@ public interface MockDsl {
         return this.retrieve("/genres/", anId, GenreResponse.class);
     }
 
+    default ResultActions updateAGenre(final GenreID anId, final UpdateGenreRequest aRequest) throws Exception {
+        return this.update("/genres/", anId, aRequest);
+    }
     /**
      * Utils
      */
