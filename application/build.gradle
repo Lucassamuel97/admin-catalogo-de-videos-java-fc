@@ -14,6 +14,8 @@ dependencies {
 
     implementation group: 'io.vavr', name: 'vavr', version: '0.10.4'
 
+    testImplementation("com.github.javafaker:javafaker:1.0.2")
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.11.0'
     testImplementation 'org.junit.jupiter:junit-jupiter'
