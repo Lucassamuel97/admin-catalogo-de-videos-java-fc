@@ -39,7 +39,8 @@ public class CastMemberMySQLGateway implements CastMemberGateway {
 
     @Override
     public Optional<CastMember> findById(final CastMemberID anId) {
-        return Optional.empty();
+        return this.castMemberRepository.findById(anId.getValue())
+                .map(CastMemberJpaEntity::toAggregate);
     }
 
     @Override
