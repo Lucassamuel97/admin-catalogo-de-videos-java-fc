@@ -6,6 +6,7 @@ import com.fullcycle.admin.catalago.domain.castmember.CastMemberGateway;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
 import com.fullcycle.admin.catalago.domain.pagination.SearchQuery;
+import com.fullcycle.admin.catalago.infrastructure.castmember.persistence.CastMemberJpaEntity;
 import com.fullcycle.admin.catalago.infrastructure.castmember.persistence.CastMemberRepository;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ public class CastMemberMySQLGateway implements CastMemberGateway {
 
     @Override
     public CastMember create(final CastMember aCastMember) {
-        return null;
+        return save(aCastMember);
     }
 
     @Override
@@ -50,5 +51,10 @@ public class CastMemberMySQLGateway implements CastMemberGateway {
     @Override
     public List<CastMemberID> existsByIds(final Iterable<CastMemberID> ids) {
         return List.of();
+    }
+
+    private CastMember save(final CastMember aCastMember) {
+        return this.castMemberRepository.save(CastMemberJpaEntity.from(aCastMember))
+                .toAggregate();
     }
 }
