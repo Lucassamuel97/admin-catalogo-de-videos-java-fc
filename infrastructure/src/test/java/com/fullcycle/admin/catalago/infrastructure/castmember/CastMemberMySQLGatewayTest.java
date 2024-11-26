@@ -14,8 +14,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 import static com.fullcycle.admin.catalago.Fixture.name;
 
 @MySQLGatewayTest
@@ -213,7 +211,7 @@ public class CastMemberMySQLGatewayTest {
             final int expectedItemsCount,
             final long expectedTotal,
             final String expectedName
-    ) {
+    ) throws InterruptedException {
         // given
         mockMembers();
 
@@ -249,7 +247,7 @@ public class CastMemberMySQLGatewayTest {
             final int expectedItemsCount,
             final long expectedTotal,
             final String expectedName
-    ) {
+    ) throws InterruptedException {
         // given
         mockMembers();
 
@@ -281,7 +279,7 @@ public class CastMemberMySQLGatewayTest {
             final int expectedItemsCount,
             final long expectedTotal,
             final String expectedNames
-    ) {
+    ) throws InterruptedException {
         // given
         mockMembers();
 
@@ -308,13 +306,15 @@ public class CastMemberMySQLGatewayTest {
         }
     }
 
-    private void mockMembers() {
-        castMemberRepository.saveAllAndFlush(List.of(
-                CastMemberJpaEntity.from(CastMember.newMember("Kit Harington", CastMemberType.ACTOR)),
-                CastMemberJpaEntity.from(CastMember.newMember("Vin Diesel", CastMemberType.ACTOR)),
-                CastMemberJpaEntity.from(CastMember.newMember("Quentin Tarantino", CastMemberType.DIRECTOR)),
-                CastMemberJpaEntity.from(CastMember.newMember("Jason Momoa", CastMemberType.ACTOR)),
-                CastMemberJpaEntity.from(CastMember.newMember("Martin Scorsese", CastMemberType.DIRECTOR))
-        ));
+    private void mockMembers() throws InterruptedException {
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newMember("Kit Harington", CastMemberType.ACTOR)));
+        Thread.sleep(10); // 10ms de intervalo
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newMember("Vin Diesel", CastMemberType.ACTOR)));
+        Thread.sleep(10);
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newMember("Quentin Tarantino", CastMemberType.DIRECTOR)));
+        Thread.sleep(10);
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newMember("Jason Momoa", CastMemberType.ACTOR)));
+        Thread.sleep(10);
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newMember("Martin Scorsese", CastMemberType.DIRECTOR)));
     }
 }
