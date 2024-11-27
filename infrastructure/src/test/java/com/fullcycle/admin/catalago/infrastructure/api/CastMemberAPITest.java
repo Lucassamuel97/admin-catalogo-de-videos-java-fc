@@ -18,6 +18,7 @@ import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import com.fullcycle.admin.catalago.domain.exceptions.NotificationException;
 import com.fullcycle.admin.catalago.domain.validation.Error;
 import com.fullcycle.admin.catalago.infrastructure.castmember.models.CreateCastMemberRequest;
+import com.fullcycle.admin.catalago.infrastructure.castmember.models.UpdateCastMemberRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
