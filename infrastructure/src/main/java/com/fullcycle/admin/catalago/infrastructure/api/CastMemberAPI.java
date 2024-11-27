@@ -1,6 +1,7 @@
 package com.fullcycle.admin.catalago.infrastructure.api;
 
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
+import com.fullcycle.admin.catalago.infrastructure.castmember.models.CreateCastMemberRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -24,5 +25,5 @@ public interface CastMemberAPI {
             @ApiResponse(responseCode = "422", description = "A validation error was thrown"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
-    ResponseEntity<?> create(@RequestBody Object input);
+    ResponseEntity<?> create(@RequestBody CreateCastMemberRequest input);
 }

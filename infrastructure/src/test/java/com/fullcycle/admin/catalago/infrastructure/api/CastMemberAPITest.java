@@ -11,8 +11,10 @@ import com.fullcycle.admin.catalago.application.castmember.retrieve.list.Default
 import com.fullcycle.admin.catalago.application.castmember.update.DefaultUpdateCastMemberUseCase;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
 import com.fullcycle.admin.catalago.domain.exceptions.NotificationException;
+import com.fullcycle.admin.catalago.infrastructure.castmember.models.CreateCastMemberRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.fullcycle.admin.catalago.domain.validation.Error;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
