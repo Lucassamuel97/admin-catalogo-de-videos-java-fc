@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,4 +51,12 @@ public interface CastMemberAPI {
     })
     ResponseEntity<?> updateById(@PathVariable String id, @RequestBody UpdateCastMemberRequest aBody);
 
+    @DeleteMapping(value = "{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete a cast member by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Cast member deleted"),
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
+    })
+    void deleteById(@PathVariable String id);
 }
