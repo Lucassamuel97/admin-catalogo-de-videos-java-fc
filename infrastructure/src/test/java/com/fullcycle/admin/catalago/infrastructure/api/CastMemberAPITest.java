@@ -6,10 +6,13 @@ import com.fullcycle.admin.catalago.Fixture;
 import com.fullcycle.admin.catalago.application.castmember.create.CreateCastMemberOutput;
 import com.fullcycle.admin.catalago.application.castmember.create.DefaultCreateCastMemberUseCase;
 import com.fullcycle.admin.catalago.application.castmember.delete.DefaultDeleteCastMemberUseCase;
+import com.fullcycle.admin.catalago.application.castmember.retrieve.get.CastMemberOutput;
 import com.fullcycle.admin.catalago.application.castmember.retrieve.get.DefaultGetCastMemberByIdUseCase;
 import com.fullcycle.admin.catalago.application.castmember.retrieve.list.DefaultListCastMembersUseCase;
 import com.fullcycle.admin.catalago.application.castmember.update.DefaultUpdateCastMemberUseCase;
+import com.fullcycle.admin.catalago.domain.castmember.CastMember;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
+import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import com.fullcycle.admin.catalago.domain.exceptions.NotificationException;
 import com.fullcycle.admin.catalago.infrastructure.castmember.models.CreateCastMemberRequest;
 import org.junit.jupiter.api.Test;
@@ -120,6 +123,59 @@ public class CastMemberAPITest {
                 Objects.equals(expectedName, actualCmd.name())
                         && Objects.equals(expectedType, actualCmd.type())
         ));
+    }
+
+    @Test
+    public void givenAValidId_whenCallsGetById_shouldReturnIt() throws Exception {
+        // given
+        final var expectedName = Fixture.name();
+        final var expectedType = Fixture.CastMembers.type();
+
+        final var aMember = CastMember.newMember(expectedName, expectedType);
+        final var expectedId = aMember.getId().getValue();
+
+        when(getCastMemberByIdUseCase.execute(any()))
+                .thenReturn(CastMemberOutput.from(aMember));
+
+        // when
+        final var aRequest = get("/cast_members/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON);
+
+        final var response = this.mvc.perform(aRequest);
+
+        // then
+        response.andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.id", equalTo(expectedId)))
+                .andExpect(jsonPath("$.name", equalTo(expectedName)))
+                .andExpect(jsonPath("$.type", equalTo(expectedType.name())))
+                .andExpect(jsonPath("$.created_at", equalTo(aMember.getCreatedAt().toString())))
+                .andExpect(jsonPath("$.updated_at", equalTo(aMember.getUpdatedAt().toString())));
+
+        verify(getCastMemberByIdUseCase).execute(eq(expectedId));
+    }
+
+    @Test
+    public void givenAInvalidId_whenCallsGetByIdAndCastMemberDoesntExists_shouldReturnNotFound() throws Exception {
+        // given
+        final var expectedErrorMessage = "CastMember with ID 123 was not found";
+        final var expectedId = CastMemberID.from("123");
+
+        when(getCastMemberByIdUseCase.execute(any()))
+                .thenThrow(NotFoundException.with(CastMember.class, expectedId));
+
+        // when
+        final var aRequest = get("/cast_members/{id}", expectedId.getValue())
+                .accept(MediaType.APPLICATION_JSON);
+
+        final var response = this.mvc.perform(aRequest);
+
+        // then
+        response.andExpect(status().isNotFound())
+                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
+
+        verify(getCastMemberByIdUseCase).execute(eq(expectedId.getValue()));
     }
 
 }
