@@ -68,6 +68,10 @@ public interface MockDsl {
         return this.update("/cast_members/", anId, new UpdateCastMemberRequest(aName, aType));
     }
 
+    default ResultActions deleteACastMember(final CastMemberID anId) throws Exception {
+        return this.delete("/cast_members/", anId);
+    }
+
     /**
      * Category
      */
