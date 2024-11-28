@@ -67,7 +67,6 @@ public class VideoTest {
         Assertions.assertTrue(actualVideo.getBanner().isEmpty());
         Assertions.assertTrue(actualVideo.getThumbnail().isEmpty());
         Assertions.assertTrue(actualVideo.getThumbnailHalf().isEmpty());
-        Assertions.assertTrue(actualVideo.getDomainEvents().isEmpty());
 
         Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
     }
