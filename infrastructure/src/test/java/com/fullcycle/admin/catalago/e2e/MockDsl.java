@@ -5,6 +5,7 @@ import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberType;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.genre.GenreID;
+import com.fullcycle.admin.catalago.infrastructure.castmember.models.CastMemberResponse;
 import com.fullcycle.admin.catalago.infrastructure.castmember.models.CreateCastMemberRequest;
 import com.fullcycle.admin.catalago.infrastructure.category.models.CategoryResponse;
 import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryRequest;
@@ -52,6 +53,14 @@ public interface MockDsl {
 
     default ResultActions listCastMembers(final int page, final int perPage, final String search, final String sort, final String direction) throws Exception {
         return this.list("/cast_members", page, perPage, search, sort, direction);
+    }
+
+    default CastMemberResponse retrieveACastMember(final CastMemberID anId) throws Exception {
+        return this.retrieve("/cast_members/", anId, CastMemberResponse.class);
+    }
+
+    default ResultActions retrieveACastMemberResult(final CastMemberID anId) throws Exception {
+        return this.retrieveResult("/cast_members/", anId);
     }
 
     /**
