@@ -478,6 +478,132 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "cast members",
+					"item": [
+						{
+							"name": "List Cast member",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/cast_members",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"cast_members"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Cast member",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"teste\",\r\n    \"type\": \"ACTOR\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/cast_members",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"cast_members"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Cast Member",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/cast_members/646f7658-2470-48e4-9fc0-4866d70e18b4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"cast_members",
+										"646f7658-2470-48e4-9fc0-4866d70e18b4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Cast Member",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Vin diesel\",\r\n    \"type\": \"DIRECTOR\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/cast_members/646f7658-2470-48e4-9fc0-4866d70e18b4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"cast_members",
+										"646f7658-2470-48e4-9fc0-4866d70e18b4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete cast member",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/cast_members/646f7658-2470-48e4-9fc0-4866d70e18b4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"cast_members",
+										"646f7658-2470-48e4-9fc0-4866d70e18b4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
