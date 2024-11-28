@@ -261,4 +261,60 @@ public class Video extends AggregateRoot<VideoID> {
                 members
         );
     }
+
+    public Video update(
+            final String aTitle,
+            final String aDescription,
+            final Year aLaunchYear,
+            final double aDuration,
+            final boolean wasOpened,
+            final boolean wasPublished,
+            final Rating aRating,
+            final Set<CategoryID> categories,
+            final Set<GenreID> genres,
+            final Set<CastMemberID> members
+    ) {
+        this.title = aTitle;
+        this.description = aDescription;
+        this.launchedAt = aLaunchYear;
+        this.duration = aDuration;
+        this.opened = wasOpened;
+        this.published = wasPublished;
+        this.rating = aRating;
+        this.setCategories(categories);
+        this.setGenres(genres);
+        this.setCastMembers(members);
+        this.updatedAt = InstantUtils.now();
+        return this;
+    }
+
+    public Video updateBannerMedia(final ImageMedia banner) {
+        this.banner = banner;
+        this.updatedAt = InstantUtils.now();
+        return this;
+    }
+
+    public Video updateThumbnailMedia(final ImageMedia thumbnail) {
+        this.thumbnail = thumbnail;
+        this.updatedAt = InstantUtils.now();
+        return this;
+    }
+
+    public Video updateThumbnailHalfMedia(final ImageMedia thumbnailHalf) {
+        this.thumbnailHalf = thumbnailHalf;
+        this.updatedAt = InstantUtils.now();
+        return this;
+    }
+
+    public Video updateTrailerMedia(final AudioVideoMedia trailer) {
+        this.trailer = trailer;
+        this.updatedAt = InstantUtils.now();
+        return this;
+    }
+
+    public Video updateVideoMedia(final AudioVideoMedia video) {
+        this.video = video;
+        this.updatedAt = InstantUtils.now();
+        return this;
+    }
 }

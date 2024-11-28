@@ -3,7 +3,6 @@ package com.fullcycle.admin.catalago.domain.video;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.genre.GenreID;
-import com.fullcycle.admin.catalago.domain.utils.InstantUtils;
 import com.fullcycle.admin.catalago.domain.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -72,7 +71,7 @@ public class VideoTest {
     }
 
     @Test
-    public void givenValidVideo_whenCallsUpdate_shouldReturnUpdated() {
+    public void givenValidVideo_whenCallsUpdate_shouldReturnUpdated() throws InterruptedException {
         // given
         final var expectedTitle = "System Design Interviews";
         final var expectedDescription = """
@@ -104,6 +103,7 @@ public class VideoTest {
         );
 
         // when
+        Thread.sleep(10);
         final var actualVideo = Video.with(aVideo).update(
                 expectedTitle,
                 expectedDescription,
@@ -142,7 +142,7 @@ public class VideoTest {
     }
 
     @Test
-    public void givenValidVideo_whenCallsUpdateVideoMedia_shouldReturnUpdated() {
+    public void givenValidVideo_whenCallsUpdateVideoMedia_shouldReturnUpdated() throws InterruptedException {
         // given
         final var expectedTitle = "System Design Interviews";
         final var expectedDescription = """
@@ -177,6 +177,7 @@ public class VideoTest {
                 AudioVideoMedia.with("abc", "Video.mp4", "/123/videos");
 
         // when
+        Thread.sleep(10);
         final var actualVideo = Video.with(aVideo).updateVideoMedia(aVideoMedia);
 
         // then
@@ -204,7 +205,7 @@ public class VideoTest {
     }
 
     @Test
-    public void givenValidVideo_whenCallsUpdateTrailerMedia_shouldReturnUpdated() {
+    public void givenValidVideo_whenCallsUpdateTrailerMedia_shouldReturnUpdated() throws InterruptedException {
         // given
         final var expectedTitle = "System Design Interviews";
         final var expectedDescription = """
@@ -239,6 +240,7 @@ public class VideoTest {
                 AudioVideoMedia.with("abc", "Trailer.mp4", "/123/videos");
 
         // when
+        Thread.sleep(10);
         final var actualVideo = Video.with(aVideo).updateTrailerMedia(aTrailerMedia);
 
         // then
@@ -266,7 +268,7 @@ public class VideoTest {
     }
 
     @Test
-    public void givenValidVideo_whenCallsUpdateBannerMedia_shouldReturnUpdated() {
+    public void givenValidVideo_whenCallsUpdateBannerMedia_shouldReturnUpdated() throws InterruptedException {
         // given
         final var expectedTitle = "System Design Interviews";
         final var expectedDescription = """
@@ -301,12 +303,14 @@ public class VideoTest {
                 ImageMedia.with("abc", "Trailer.mp4", "/123/videos");
 
         // when
+        Thread.sleep(10);
         final var actualVideo = Video.with(aVideo).updateBannerMedia(aBannerMedia);
 
         // then
         Assertions.assertNotNull(actualVideo);
         Assertions.assertNotNull(actualVideo.getId());
         Assertions.assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
+
         Assertions.assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
         Assertions.assertEquals(expectedTitle, actualVideo.getTitle());
         Assertions.assertEquals(expectedDescription, actualVideo.getDescription());
@@ -328,7 +332,7 @@ public class VideoTest {
     }
 
     @Test
-    public void givenValidVideo_whenCallsUpdateThumbnailMedia_shouldReturnUpdated() {
+    public void givenValidVideo_whenCallsUpdateThumbnailMedia_shouldReturnUpdated() throws InterruptedException {
         // given
         final var expectedTitle = "System Design Interviews";
         final var expectedDescription = """
@@ -363,6 +367,7 @@ public class VideoTest {
                 ImageMedia.with("abc", "Trailer.mp4", "/123/videos");
 
         // when
+        Thread.sleep(10);
         final var actualVideo = Video.with(aVideo).updateThumbnailMedia(aThumbMedia);
 
         // then
@@ -390,7 +395,7 @@ public class VideoTest {
     }
 
     @Test
-    public void givenValidVideo_whenCallsUpdateThumbnailHalfMedia_shouldReturnUpdated() {
+    public void givenValidVideo_whenCallsUpdateThumbnailHalfMedia_shouldReturnUpdated() throws InterruptedException {
         // given
         final var expectedTitle = "System Design Interviews";
         final var expectedDescription = """
@@ -425,6 +430,7 @@ public class VideoTest {
                 ImageMedia.with("abc", "Trailer.mp4", "/123/videos");
 
         // when
+        Thread.sleep(10);
         final var actualVideo = Video.with(aVideo).updateThumbnailHalfMedia(aThumbMedia);
 
         // then
