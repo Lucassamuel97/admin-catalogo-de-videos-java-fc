@@ -76,6 +76,11 @@ public class Video extends AggregateRoot<VideoID> {
         this.castMembers = members;
     }
 
+    @Override
+    public void validate(final ValidationHandler handler) {
+        new VideoValidator(this, handler).validate();
+    }
+
     public static Video newVideo(
             final String aTitle,
             final String aDescription,
@@ -255,10 +260,5 @@ public class Video extends AggregateRoot<VideoID> {
                 genres,
                 members
         );
-    }
-
-    @Override
-    public void validate(ValidationHandler handler) {
-
     }
 }
