@@ -1,8 +1,11 @@
 package com.fullcycle.admin.catalago.e2e;
 
 import com.fullcycle.admin.catalago.domain.Identifier;
+import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
+import com.fullcycle.admin.catalago.domain.castmember.CastMemberType;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.genre.GenreID;
+import com.fullcycle.admin.catalago.infrastructure.castmember.models.CreateCastMemberRequest;
 import com.fullcycle.admin.catalago.infrastructure.category.models.CategoryResponse;
 import com.fullcycle.admin.catalago.infrastructure.category.models.CreateCategoryRequest;
 import com.fullcycle.admin.catalago.infrastructure.category.models.UpdateCategoryRequest;
@@ -24,6 +27,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public interface MockDsl {
 
     MockMvc mvc();
+
+    /**
+     * Cast Member
+     */
+    default CastMemberID givenACastMember(final String aName, final CastMemberType aType) throws Exception {
+        final var aRequestBody = new CreateCastMemberRequest(aName, aType);
+        final var actualId = this.given("/cast_members", aRequestBody);
+        return CastMemberID.from(actualId);
+    }
+
+    default ResultActions givenACastMemberResult(final String aName, final CastMemberType aType) throws Exception {
+        final var aRequestBody = new CreateCastMemberRequest(aName, aType);
+        return this.givenResult("/cast_members", aRequestBody);
+    }
 
     /**
      * Category
