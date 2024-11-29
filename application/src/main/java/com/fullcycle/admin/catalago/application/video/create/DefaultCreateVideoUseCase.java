@@ -5,6 +5,7 @@ import com.fullcycle.admin.catalago.domain.castmember.CastMemberGateway;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
 import com.fullcycle.admin.catalago.domain.category.CategoryGateway;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
+import com.fullcycle.admin.catalago.domain.exceptions.InternalErrorException;
 import com.fullcycle.admin.catalago.domain.exceptions.NotificationException;
 import com.fullcycle.admin.catalago.domain.genre.GenreGateway;
 import com.fullcycle.admin.catalago.domain.genre.GenreID;
@@ -29,17 +30,19 @@ public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
     private final CastMemberGateway castMemberGateway;
     private final GenreGateway genreGateway;
     private final VideoGateway videoGateway;
+    private final MediaResourceGateway mediaResourceGateway;
 
     public DefaultCreateVideoUseCase(
             final CategoryGateway categoryGateway,
             final CastMemberGateway castMemberGateway,
             final GenreGateway genreGateway,
-            final VideoGateway videoGateway
+            final VideoGateway videoGateway, MediaResourceGateway mediaResourceGateway
     ) {
         this.categoryGateway = Objects.requireNonNull(categoryGateway);
         this.castMemberGateway = Objects.requireNonNull(castMemberGateway);
         this.genreGateway = Objects.requireNonNull(genreGateway);
         this.videoGateway = Objects.requireNonNull(videoGateway);
+        this.mediaResourceGateway = Objects.requireNonNull(mediaResourceGateway);
     }
 
     @Override
@@ -79,7 +82,45 @@ public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
     }
 
     private Video create(final CreateVideoCommand aCommand, final Video aVideo) {
-        return this.videoGateway.create(aVideo);
+        final var anId = aVideo.getId();
+
+
+        try {
+            final var aVideoMedia = aCommand.getVideo()
+                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, it))
+                    .orElse(null);
+
+            final var aTrailerMedia = aCommand.getTrailer()
+                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, it))
+                    .orElse(null);
+
+            final var aBannerMedia = aCommand.getBanner()
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .orElse(null);
+
+            final var aThumbnailMedia = aCommand.getThumbnail()
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .orElse(null);
+
+            final var aThumbHalfMedia = aCommand.getThumbnailHalf()
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .orElse(null);
+
+            return this.videoGateway.create(
+                    aVideo
+                            .updateVideoMedia(aVideoMedia)
+                            .updateTrailerMedia(aTrailerMedia)
+                            .updateBannerMedia(aBannerMedia)
+                            .updateThumbnailMedia(aThumbnailMedia)
+                            .updateThumbnailHalfMedia(aThumbHalfMedia)
+            );
+        } catch (final Throwable t) {
+            this.mediaResourceGateway.clearResources(anId);
+            throw InternalErrorException.with(
+                    "An error on create video was observed [videoId:%s]".formatted(anId.getValue()),
+                    t
+            );
+        }
     }
 
     private ValidationHandler validateCategories(final Set<CategoryID> ids) {
