@@ -4,14 +4,12 @@ import com.fullcycle.admin.catalago.domain.castmember.CastMember;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberType;
 import com.fullcycle.admin.catalago.domain.category.Category;
 import com.fullcycle.admin.catalago.domain.genre.Genre;
-import com.fullcycle.admin.catalago.domain.video.AudioVideoMedia;
-import com.fullcycle.admin.catalago.domain.video.ImageMedia;
-import com.fullcycle.admin.catalago.domain.video.Rating;
-import com.fullcycle.admin.catalago.domain.video.Video;
+import com.fullcycle.admin.catalago.domain.video.*;
 import com.github.javafaker.Faker;
 
 import java.time.Year;
 import java.util.Set;
+import java.util.UUID;
 
 import static io.vavr.API.*;
 
@@ -34,6 +32,19 @@ public class Fixture {
     public static boolean bool() {
         return FAKER.bool().bool();
     }
+    public static String title() {
+        return FAKER.options().option(
+                "System Design no Mercado Livre na prática",
+                "Não cometa esses erros ao trabalhar com Microsserviços",
+                "Testes de Mutação. Você não testa seu software corretamente"
+        );
+    }
+
+    public static String checksum() {
+        return "03fe62de";
+    }
+
+
 
     public static final class Categories {
 
@@ -90,14 +101,6 @@ public class Fixture {
         }
     }
 
-    public static String title() {
-        return FAKER.options().option(
-                "System Design no Mercado Livre na prática",
-                "Não cometa esses erros ao trabalhar com Microsserviços",
-                "Testes de Mutação. Você não testa seu software corretamente"
-        );
-    }
-
     public static final class Videos {
 
         private static final Video SYSTEM_DESIGN = Video.newVideo(
@@ -110,7 +113,7 @@ public class Fixture {
                 rating(),
                 Set.of(Categories.aulas().getId()),
                 Set.of(Genres.tech().getId()),
-                Set.of(CastMembers.wesley().getId(), CastMembers.gabriel().getId())
+                Set.of(CastMembers.wesley().getId(), CastMembers.samuca().getId())
         );
 
         public static Video systemDesign() {
@@ -131,7 +134,7 @@ public class Fixture {
                     Case($(), "image/jpg")
             );
 
-            final String checksum = IdUtils.uuid();
+            final String checksum = UUID.randomUUID().toString();
             final byte[] content = "Conteudo".getBytes();
 
             return Resource.with(content, checksum, contentType, type.name().toLowerCase());
