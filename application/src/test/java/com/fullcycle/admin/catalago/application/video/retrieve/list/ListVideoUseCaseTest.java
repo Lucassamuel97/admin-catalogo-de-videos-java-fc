@@ -4,6 +4,7 @@ import com.fullcycle.admin.catalago.application.Fixture;
 import com.fullcycle.admin.catalago.application.UseCaseTest;
 import com.fullcycle.admin.catalago.application.genre.retrieve.list.GenreListOutput;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
+import com.fullcycle.admin.catalago.domain.video.Video;
 import com.fullcycle.admin.catalago.domain.video.VideoGateway;
 import com.fullcycle.admin.catalago.domain.video.VideoSearchQuery;
 import org.junit.jupiter.api.Assertions;
@@ -85,7 +86,7 @@ public class ListVideoUseCaseTest extends UseCaseTest {
     @Test
     public void givenAValidQuery_whenCallsListVideosAndResultIsEmpty_shouldReturnGenres() {
         // given
-        final var videos = List.<VideoPreview>of();
+        final var videos = List.<Video>of();
 
         final var expectedPage = 0;
         final var expectedPerPage = 10;
