@@ -1,6 +1,7 @@
 package com.fullcycle.admin.catalago.application;
 
 
+import com.fullcycle.admin.catalago.domain.Identifier;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,4 +23,16 @@ public abstract class UseCaseTest implements BeforeEachCallback {
     }
 
     protected abstract List<Object> getMocks();
+
+    protected Set<String> asString(final Set<? extends Identifier> ids) {
+        return ids.stream()
+                .map(Identifier::getValue)
+                .collect(Collectors.toSet());
+    }
+
+    protected List<String> asString(final List<? extends Identifier> ids) {
+        return ids.stream()
+                .map(Identifier::getValue)
+                .toList();
+    }
 }
