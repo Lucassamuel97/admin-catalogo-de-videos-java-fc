@@ -77,6 +77,9 @@ public class VideoJpaEntity {
     @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VideoCategoryJpaEntity> categories;
 
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VideoGenreJpaEntity> genres;
+
     public VideoJpaEntity() {
     }
 
@@ -113,6 +116,7 @@ public class VideoJpaEntity {
         this.thumbnail = thumbnail;
         this.thumbnailHalf = thumbnailHalf;
         this.categories = new HashSet<>(3);
+        this.genres = new HashSet<>(3);
     }
 
     public static VideoJpaEntity from(final Video aVideo) {
@@ -146,6 +150,8 @@ public class VideoJpaEntity {
 
         aVideo.getCategories()
                 .forEach(entity::addCategory);
+        aVideo.getGenres()
+                .forEach(entity::addGenre);
 
         return entity;
     }
@@ -180,13 +186,19 @@ public class VideoJpaEntity {
                 getCategories().stream()
                         .map(it -> CategoryID.from(it.getId().getCategoryId()))
                         .collect(Collectors.toSet()),
-                null,
+                getGenres().stream()
+                        .map(it -> GenreID.from(it.getId().getGenreId()))
+                        .collect(Collectors.toSet()),
                 null
         );
     }
 
     public void addCategory(final CategoryID anId) {
         this.categories.add(VideoCategoryJpaEntity.from(this, anId));
+    }
+
+    public void addGenre(final GenreID anId) {
+        this.genres.add(VideoGenreJpaEntity.from(this, anId));
     }
 
     public String getId() {
@@ -330,6 +342,15 @@ public class VideoJpaEntity {
 
     public VideoJpaEntity setCategories(Set<VideoCategoryJpaEntity> categories) {
         this.categories = categories;
+        return this;
+    }
+
+    public Set<VideoGenreJpaEntity> getGenres() {
+        return genres;
+    }
+
+    public VideoJpaEntity setGenres(Set<VideoGenreJpaEntity> genres) {
+        this.genres = genres;
         return this;
     }
 }
