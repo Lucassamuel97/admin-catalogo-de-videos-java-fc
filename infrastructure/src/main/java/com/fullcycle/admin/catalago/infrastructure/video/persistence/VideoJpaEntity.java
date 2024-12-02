@@ -15,6 +15,7 @@ import java.time.Year;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Table(name = "videos")
@@ -73,6 +74,9 @@ public class VideoJpaEntity {
     @JoinColumn(name = "thumbnail_half_id")
     private ImageMediaJpaEntity thumbnailHalf;
 
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VideoCategoryJpaEntity> categories;
+
     public VideoJpaEntity() {
     }
 
@@ -108,6 +112,7 @@ public class VideoJpaEntity {
         this.banner = banner;
         this.thumbnail = thumbnail;
         this.thumbnailHalf = thumbnailHalf;
+        this.categories = new HashSet<>(3);
     }
 
     public static VideoJpaEntity from(final Video aVideo) {
@@ -139,6 +144,9 @@ public class VideoJpaEntity {
                         .orElse(null)
         );
 
+        aVideo.getCategories()
+                .forEach(entity::addCategory);
+
         return entity;
     }
 
@@ -169,10 +177,16 @@ public class VideoJpaEntity {
                 Optional.ofNullable(getVideo())
                         .map(AudioVideoMediaJpaEntity::toDomain)
                         .orElse(null),
-                null,
+                getCategories().stream()
+                        .map(it -> CategoryID.from(it.getId().getCategoryId()))
+                        .collect(Collectors.toSet()),
                 null,
                 null
         );
+    }
+
+    public void addCategory(final CategoryID anId) {
+        this.categories.add(VideoCategoryJpaEntity.from(this, anId));
     }
 
     public String getId() {
@@ -307,6 +321,15 @@ public class VideoJpaEntity {
 
     public VideoJpaEntity setThumbnailHalf(ImageMediaJpaEntity thumbnailHalf) {
         this.thumbnailHalf = thumbnailHalf;
+        return this;
+    }
+
+    public Set<VideoCategoryJpaEntity> getCategories() {
+        return categories;
+    }
+
+    public VideoJpaEntity setCategories(Set<VideoCategoryJpaEntity> categories) {
+        this.categories = categories;
         return this;
     }
 }
