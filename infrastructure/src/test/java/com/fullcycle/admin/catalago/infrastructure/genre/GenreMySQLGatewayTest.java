@@ -296,6 +296,8 @@ public class GenreMySQLGatewayTest {
         Assertions.assertNull(aGenre.getDeletedAt());
 
         // when
+
+
         final var actualGenre = genreGateway.update(
                 Genre.with(aGenre)
                         .update(expectedName, expectedIsActive, expectedCategories)

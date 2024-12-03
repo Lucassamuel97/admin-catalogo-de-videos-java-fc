@@ -1,6 +1,6 @@
 package com.fullcycle.admin.catalago.infrastructure.castmember;
 
-import com.fullcycle.admin.catalago.Fixture;
+import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.MySQLGatewayTest;
 import com.fullcycle.admin.catalago.domain.castmember.CastMember;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
@@ -14,7 +14,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.fullcycle.admin.catalago.Fixture.name;
+import java.util.List;
+
+import static com.fullcycle.admin.catalago.domain.Fixture.name;
 
 @MySQLGatewayTest
 public class CastMemberMySQLGatewayTest {
@@ -99,6 +101,26 @@ public class CastMemberMySQLGatewayTest {
         Assertions.assertEquals(expectedType, persistedMember.getType());
         Assertions.assertEquals(aMember.getCreatedAt(), persistedMember.getCreatedAt());
         Assertions.assertTrue(aMember.getUpdatedAt().isBefore(persistedMember.getUpdatedAt()));
+    }
+
+    @Test
+    public void givenTwoCastMembersAndOnePersisted_whenCallsExistsByIds_shouldReturnPersistedID() {
+        // given
+        final var aMember = CastMember.newMember("Vin", CastMemberType.DIRECTOR);
+
+        final var expectedItems = 1;
+        final var expectedId = aMember.getId();
+
+        Assertions.assertEquals(0, castMemberRepository.count());
+
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(aMember));
+
+        // when
+        final var actualMember = castMemberGateway.existsByIds(List.of(CastMemberID.from("123"), expectedId));
+
+        // then
+        Assertions.assertEquals(expectedItems, actualMember.size());
+        Assertions.assertEquals(expectedId.getValue(), actualMember.get(0).getValue());
     }
 
     @Test

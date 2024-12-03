@@ -1,7 +1,7 @@
 package com.fullcycle.admin.catalago.e2e.castmember;
 
 import com.fullcycle.admin.catalago.E2ETest;
-import com.fullcycle.admin.catalago.Fixture;
+import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberType;
 import com.fullcycle.admin.catalago.e2e.MockDsl;

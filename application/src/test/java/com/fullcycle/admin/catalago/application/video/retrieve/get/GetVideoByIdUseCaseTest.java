@@ -1,7 +1,7 @@
 package com.fullcycle.admin.catalago.application.video.retrieve.get;
 
-import com.fullcycle.admin.catalago.application.Fixture;
 import com.fullcycle.admin.catalago.application.UseCaseTest;
+import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.domain.exceptions.NotFoundException;
 import com.fullcycle.admin.catalago.domain.video.Video;
 import com.fullcycle.admin.catalago.domain.video.VideoGateway;
@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.fullcycle.admin.catalago.application.Fixture.Videos.audioVideo;
-import static com.fullcycle.admin.catalago.application.Fixture.Videos.image;
+import static com.fullcycle.admin.catalago.domain.Fixture.Videos.audioVideo;
+import static com.fullcycle.admin.catalago.domain.Fixture.Videos.image;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

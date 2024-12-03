@@ -1,6 +1,7 @@
 package com.fullcycle.admin.catalago.domain.video;
 
 import com.fullcycle.admin.catalago.domain.ValueObject;
+import com.fullcycle.admin.catalago.domain.utils.IdUtils;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -20,7 +21,7 @@ public class ImageMedia extends ValueObject {
     }
 
     public static ImageMedia with(final String checksum, final String name, final String location) {
-        return new ImageMedia(UUID.randomUUID().toString(), checksum, name, location);
+        return new ImageMedia(IdUtils.uuid(), checksum, name, location);
     }
 
     public static ImageMedia with(final String id, final String checksum, final String name, final String location) {

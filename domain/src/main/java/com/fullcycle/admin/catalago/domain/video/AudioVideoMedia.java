@@ -1,6 +1,7 @@
 package com.fullcycle.admin.catalago.domain.video;
 
 import com.fullcycle.admin.catalago.domain.ValueObject;
+import com.fullcycle.admin.catalago.domain.utils.IdUtils;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -35,7 +36,7 @@ public class AudioVideoMedia extends ValueObject {
             final String name,
             final String rawLocation
     ) {
-        return new AudioVideoMedia(UUID.randomUUID().toString(), checksum, name, rawLocation, "", MediaStatus.PENDING);
+        return new AudioVideoMedia(IdUtils.uuid(), checksum, name, rawLocation, "", MediaStatus.PENDING);
     }
 
     public static AudioVideoMedia with(

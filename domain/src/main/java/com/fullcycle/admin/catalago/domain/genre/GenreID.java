@@ -1,10 +1,9 @@
 package com.fullcycle.admin.catalago.domain.genre;
 
 import com.fullcycle.admin.catalago.domain.Identifier;
-import com.fullcycle.admin.catalago.domain.category.CategoryID;
+import com.fullcycle.admin.catalago.domain.utils.IdUtils;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class GenreID extends Identifier {
     private final String value;
@@ -15,15 +14,11 @@ public class GenreID extends Identifier {
     }
 
     public static GenreID unique() {
-        return GenreID.from(UUID.randomUUID());
+        return GenreID.from(IdUtils.uuid());
     }
 
     public static GenreID from(final String anId) {
         return new GenreID(anId);
-    }
-
-    public static GenreID from(final UUID anId){
-        return new GenreID(anId.toString().toLowerCase());
     }
 
     @Override

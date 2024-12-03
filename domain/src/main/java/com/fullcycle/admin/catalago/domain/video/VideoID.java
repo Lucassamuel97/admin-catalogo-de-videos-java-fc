@@ -2,11 +2,9 @@ package com.fullcycle.admin.catalago.domain.video;
 
 
 import com.fullcycle.admin.catalago.domain.Identifier;
-import com.fullcycle.admin.catalago.domain.category.CategoryID;
-
+import com.fullcycle.admin.catalago.domain.utils.IdUtils;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class VideoID extends Identifier {
     private final String value;
@@ -19,12 +17,8 @@ public class VideoID extends Identifier {
         return new VideoID(anId.toLowerCase());
     }
 
-    public static VideoID from(final UUID anId){
-        return VideoID.from(anId.toString());
-    }
-
     public static VideoID unique() {
-        return VideoID.from(UUID.randomUUID());
+        return VideoID.from(IdUtils.uuid());
     }
 
     @Override
