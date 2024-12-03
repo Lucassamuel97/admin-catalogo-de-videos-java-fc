@@ -1,17 +1,21 @@
 package com.fullcycle.admin.catalago.infrastructure.video;
 
+import com.fullcycle.admin.catalago.domain.Identifier;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
-import com.fullcycle.admin.catalago.domain.video.Video;
-import com.fullcycle.admin.catalago.domain.video.VideoGateway;
-import com.fullcycle.admin.catalago.domain.video.VideoID;
-import com.fullcycle.admin.catalago.domain.video.VideoSearchQuery;
+import com.fullcycle.admin.catalago.domain.video.*;
+import com.fullcycle.admin.catalago.infrastructure.utils.SqlUtils;
 import com.fullcycle.admin.catalago.infrastructure.video.persistence.VideoJpaEntity;
 import com.fullcycle.admin.catalago.infrastructure.video.persistence.VideoRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
+
+import static com.fullcycle.admin.catalago.domain.utils.CollectionUtils.mapTo;
+import static com.fullcycle.admin.catalago.domain.utils.CollectionUtils.nullIfEmpty;
 
 @Component
 public class DefaultVideoGateway implements VideoGateway {
@@ -52,8 +56,27 @@ public class DefaultVideoGateway implements VideoGateway {
     }
 
     @Override
-    public Pagination<Video> findAll(VideoSearchQuery aQuery) {
-        return null;
+    public Pagination<VideoPreview> findAll(final VideoSearchQuery aQuery) {
+        final var page = PageRequest.of(
+                aQuery.page(),
+                aQuery.perPage(),
+                Sort.by(Sort.Direction.fromString(aQuery.direction()), aQuery.sort())
+        );
+
+        final var actualPage = this.videoRepository.findAll(
+                SqlUtils.like(SqlUtils.upper(aQuery.terms())),
+                nullIfEmpty(mapTo(aQuery.castMembers(), Identifier::getValue)),
+                nullIfEmpty(mapTo(aQuery.categories(), Identifier::getValue)),
+                nullIfEmpty(mapTo(aQuery.genres(), Identifier::getValue)),
+                page
+        );
+
+        return new Pagination<>(
+                actualPage.getNumber(),
+                actualPage.getSize(),
+                actualPage.getTotalElements(),
+                actualPage.toList()
+        );
     }
 
     private Video save(final Video aVideo) {
