@@ -4,6 +4,7 @@ import com.fullcycle.admin.catalago.domain.castmember.CastMember;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberType;
 import com.fullcycle.admin.catalago.domain.category.Category;
 import com.fullcycle.admin.catalago.domain.genre.Genre;
+import com.fullcycle.admin.catalago.domain.utils.IdUtils;
 import com.fullcycle.admin.catalago.domain.video.*;
 import com.github.javafaker.Faker;
 
@@ -147,7 +148,7 @@ public class Fixture {
                     Case($(), "image/jpg")
             );
 
-            final String checksum = UUID.randomUUID().toString();
+            final String checksum = IdUtils.uuid();
             final byte[] content = "Conteudo".getBytes();
 
             return Resource.with(content, checksum, contentType, type.name().toLowerCase());

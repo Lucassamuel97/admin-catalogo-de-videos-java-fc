@@ -1,16 +1,15 @@
 package com.fullcycle.admin.catalago.domain.video;
 
+import com.fullcycle.admin.catalago.domain.utils.IdUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 class AudioVideoMediaTest {
 
     @Test
     public void givenValidParams_whenCallsNewAudioVideo_ShouldReturnInstance() {
         // given
-        final var expectedId = UUID.randomUUID().toString();
+        final var expectedId = IdUtils.uuid();
         final var expectedChecksum = "abc";
         final var expectedName = "Banner.png";
         final var expectedRawLocation = "/images/ac";

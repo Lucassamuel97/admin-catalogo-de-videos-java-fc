@@ -1,6 +1,7 @@
 package com.fullcycle.admin.catalago.domain.category;
 
 import com.fullcycle.admin.catalago.domain.Identifier;
+import com.fullcycle.admin.catalago.domain.utils.IdUtils;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -10,12 +11,11 @@ public class CategoryID extends Identifier {
     private final String value;
 
     private CategoryID(final String value){
-        Objects.requireNonNull(value);
-        this.value = value;
+        this.value =  Objects.requireNonNull(value);
     }
 
     public static CategoryID unique(){
-        return CategoryID.from(UUID.randomUUID());
+        return CategoryID.from(IdUtils.uuid());
     }
 
     public static CategoryID from(final String anId){
