@@ -44,8 +44,9 @@ public class DefaultVideoGateway implements VideoGateway {
     }
 
     @Override
-    public Video update(Video aVideo) {
-        return null;
+    @Transactional
+    public Video update(final Video aVideo) {
+        return save(aVideo);
     }
 
     @Override
