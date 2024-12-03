@@ -1,6 +1,6 @@
 package com.fullcycle.admin.catalago.infrastructure.castmember.models;
 
-import com.fullcycle.admin.catalago.Fixture;
+import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.JacksonTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

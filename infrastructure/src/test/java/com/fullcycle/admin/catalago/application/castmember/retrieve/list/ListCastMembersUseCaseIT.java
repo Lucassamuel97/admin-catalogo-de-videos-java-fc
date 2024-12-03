@@ -1,6 +1,6 @@
 package com.fullcycle.admin.catalago.application.castmember.retrieve.list;
 
-import com.fullcycle.admin.catalago.Fixture;
+import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.IntegrationTest;
 import com.fullcycle.admin.catalago.domain.castmember.CastMember;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberGateway;

@@ -1,7 +1,7 @@
 package com.fullcycle.admin.catalago.application.castmember.retrieve.list;
 
-import com.fullcycle.admin.catalago.application.Fixture;
 import com.fullcycle.admin.catalago.application.UseCaseTest;
+import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.domain.castmember.CastMember;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberGateway;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;

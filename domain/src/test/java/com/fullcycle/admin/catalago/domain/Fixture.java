@@ -1,4 +1,4 @@
-package com.fullcycle.admin.catalago.application;
+package com.fullcycle.admin.catalago.domain;
 
 import com.fullcycle.admin.catalago.domain.castmember.CastMember;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberType;
@@ -10,7 +10,6 @@ import com.github.javafaker.Faker;
 
 import java.time.Year;
 import java.util.Set;
-import java.util.UUID;
 
 import static io.vavr.API.*;
 
@@ -33,6 +32,7 @@ public class Fixture {
     public static boolean bool() {
         return FAKER.bool().bool();
     }
+
     public static String title() {
         return FAKER.options().option(
                 "System Design no Mercado Livre na prática",
@@ -113,6 +113,7 @@ public class Fixture {
         public static CastMember samuca() {
             return CastMember.with(SAMUCA);
         }
+
     }
 
     public static final class Videos {

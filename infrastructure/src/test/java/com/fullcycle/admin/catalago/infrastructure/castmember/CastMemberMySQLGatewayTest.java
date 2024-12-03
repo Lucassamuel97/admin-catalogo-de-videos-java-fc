@@ -1,6 +1,6 @@
 package com.fullcycle.admin.catalago.infrastructure.castmember;
 
-import com.fullcycle.admin.catalago.Fixture;
+import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.MySQLGatewayTest;
 import com.fullcycle.admin.catalago.domain.castmember.CastMember;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
@@ -14,7 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.fullcycle.admin.catalago.Fixture.name;
+import static com.fullcycle.admin.catalago.domain.Fixture.name;
 
 @MySQLGatewayTest
 public class CastMemberMySQLGatewayTest {

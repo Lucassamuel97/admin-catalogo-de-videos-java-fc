@@ -2,7 +2,7 @@ package com.fullcycle.admin.catalago.infrastructure.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullcycle.admin.catalago.ControllerTest;
-import com.fullcycle.admin.catalago.Fixture;
+import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.application.castmember.create.CreateCastMemberOutput;
 import com.fullcycle.admin.catalago.application.castmember.create.DefaultCreateCastMemberUseCase;
 import com.fullcycle.admin.catalago.application.castmember.delete.DefaultDeleteCastMemberUseCase;
