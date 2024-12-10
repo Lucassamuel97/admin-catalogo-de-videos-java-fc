@@ -1110,14 +1110,16 @@ public class UpdateVIdeoUseCaseTest extends UseCaseTest {
 
     private void mockImageMedia() {
         when(mediaResourceGateway.storeImage(any(), any())).thenAnswer(t -> {
-            final var resource = t.getArgument(1, Resource.class);
+            final var videoResource = t.getArgument(1, VideoResource.class);
+            final var resource = videoResource.resource();
             return ImageMedia.with(resource.checksum(), resource.name(), "/img");
         });
     }
 
     private void mockAudioVideoMedia() {
         when(mediaResourceGateway.storeAudioVideo(any(), any())).thenAnswer(t -> {
-            final var resource = t.getArgument(1, Resource.class);
+            final var videoResource = t.getArgument(1, VideoResource.class);
+            final var resource = videoResource.resource();
             return AudioVideoMedia.with(
                     resource.checksum(),
                     resource.name(),
