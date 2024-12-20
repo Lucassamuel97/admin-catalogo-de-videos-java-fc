@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,5 +64,22 @@ public class GetMediaUseCaseTest extends UseCaseTest {
         Assertions.assertThrows(NotFoundException.class, () -> {
             this.useCase.execute(aCmd);
         });
+    }
+
+    @Test
+    public void givenVideoIdAndType_whenTypeDoesntExists_shouldReturnNotFoundException() {
+        // given
+        final var expectedId = VideoID.unique();
+        final var expectedErrorMessage = "Media type QUALQUER doesn't exists";
+
+        final var aCmd = GetMediaCommand.with(expectedId.getValue(), "QUALQUER");
+
+        // when
+        final var actualException = Assertions.assertThrows(NotFoundException.class, () -> {
+            this.useCase.execute(aCmd);
+        });
+
+        // then
+        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
     }
 }
