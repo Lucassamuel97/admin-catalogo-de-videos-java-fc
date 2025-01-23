@@ -317,4 +317,28 @@ public class Video extends AggregateRoot<VideoID> {
         this.updatedAt = InstantUtils.now();
         return this;
     }
+
+    public Video processing(final VideoMediaType aType) {
+        if (VideoMediaType.VIDEO == aType) {
+            getVideo()
+                    .ifPresent(media -> updateVideoMedia(media.processing()));
+        } else if (VideoMediaType.TRAILER == aType) {
+            getTrailer()
+                    .ifPresent(media -> updateTrailerMedia(media.processing()));
+        }
+
+        return this;
+    }
+
+    public Video completed(final VideoMediaType aType, final String encodedPath) {
+        if (VideoMediaType.VIDEO == aType) {
+            getVideo()
+                    .ifPresent(media -> updateVideoMedia(media.completed(encodedPath)));
+        } else if (VideoMediaType.TRAILER == aType) {
+            getTrailer()
+                    .ifPresent(media -> updateTrailerMedia(media.completed(encodedPath)));
+        }
+
+        return this;
+    }
 }
