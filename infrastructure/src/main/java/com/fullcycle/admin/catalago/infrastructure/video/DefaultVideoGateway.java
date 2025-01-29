@@ -3,6 +3,8 @@ package com.fullcycle.admin.catalago.infrastructure.video;
 import com.fullcycle.admin.catalago.domain.Identifier;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
 import com.fullcycle.admin.catalago.domain.video.*;
+import com.fullcycle.admin.catalago.infrastructure.configuration.annotations.VideoCreatedQueue;
+import com.fullcycle.admin.catalago.infrastructure.services.EventService;
 import com.fullcycle.admin.catalago.infrastructure.utils.SqlUtils;
 import com.fullcycle.admin.catalago.infrastructure.video.persistence.VideoJpaEntity;
 import com.fullcycle.admin.catalago.infrastructure.video.persistence.VideoRepository;
@@ -20,11 +22,14 @@ import static com.fullcycle.admin.catalago.domain.utils.CollectionUtils.nullIfEm
 @Component
 public class DefaultVideoGateway implements VideoGateway {
 
+    private final EventService eventService;
     private final VideoRepository videoRepository;
 
     public DefaultVideoGateway(
+            @VideoCreatedQueue final EventService eventService,
             final VideoRepository videoRepository
     ) {
+        this.eventService = Objects.requireNonNull(eventService);
         this.videoRepository = Objects.requireNonNull(videoRepository);
     }
 
@@ -80,7 +85,11 @@ public class DefaultVideoGateway implements VideoGateway {
     }
 
     private Video save(final Video aVideo) {
-        return this.videoRepository.save(VideoJpaEntity.from(aVideo))
+        final var result = this.videoRepository.save(VideoJpaEntity.from(aVideo))
                 .toAggregate();
+
+        aVideo.publishDomainEvents(this.eventService::send);
+
+        return result;
     }
 }
