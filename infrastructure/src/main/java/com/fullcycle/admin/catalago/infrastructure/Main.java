@@ -16,9 +16,4 @@ public class Main {
         SpringApplication.run(WebServerConfig.class, args);
     }
 
-    //Força uma conexão para criar as filas automaticamente
-    @RabbitListener(queues = "video.encoded.queue")
-    void dummyListener(){
-
-    }
 }
