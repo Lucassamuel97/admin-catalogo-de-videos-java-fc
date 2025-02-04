@@ -8,6 +8,7 @@ import com.fullcycle.admin.catalago.application.video.create.CreateVideoOutput;
 import com.fullcycle.admin.catalago.application.video.create.CreateVideoUseCase;
 import com.fullcycle.admin.catalago.domain.Fixture;
 import com.fullcycle.admin.catalago.domain.video.VideoID;
+import com.fullcycle.admin.catalago.infrastructure.video.models.CreateVideoRequest;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
