@@ -19,8 +19,8 @@ import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.exceptions.NotificationException;
 import com.fullcycle.admin.catalago.domain.genre.GenreID;
 import com.fullcycle.admin.catalago.domain.pagination.Pagination;
-import com.fullcycle.admin.catalago.domain.video.*;
 import com.fullcycle.admin.catalago.domain.validation.Error;
+import com.fullcycle.admin.catalago.domain.video.*;
 import com.fullcycle.admin.catalago.infrastructure.video.models.CreateVideoRequest;
 import com.fullcycle.admin.catalago.infrastructure.video.models.UpdateVideoRequest;
 import org.junit.jupiter.api.Assertions;
@@ -584,5 +584,4 @@ public class VideoAPITest {
         Assertions.assertTrue(actualQuery.castMembers().isEmpty());
         Assertions.assertTrue(actualQuery.genres().isEmpty());
     }
-
 }
