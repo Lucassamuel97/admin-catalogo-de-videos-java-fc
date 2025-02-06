@@ -1,10 +1,12 @@
 package com.fullcycle.admin.catalago.infrastructure.video.presenters;
 
 import com.fullcycle.admin.catalago.application.video.retrieve.get.VideoOutput;
+import com.fullcycle.admin.catalago.application.video.update.UpdateVideoOutput;
 import com.fullcycle.admin.catalago.domain.video.AudioVideoMedia;
 import com.fullcycle.admin.catalago.domain.video.ImageMedia;
 import com.fullcycle.admin.catalago.infrastructure.video.models.AudioVideoMediaResponse;
 import com.fullcycle.admin.catalago.infrastructure.video.models.ImageMediaResponse;
+import com.fullcycle.admin.catalago.infrastructure.video.models.UpdateVideoResponse;
 import com.fullcycle.admin.catalago.infrastructure.video.models.VideoResponse;
 
 public interface VideoApiPresenter {
@@ -56,5 +58,9 @@ public interface VideoApiPresenter {
                 image.name(),
                 image.location()
         );
+    }
+
+    static UpdateVideoResponse present(final UpdateVideoOutput output) {
+        return new UpdateVideoResponse(output.id());
     }
 }
