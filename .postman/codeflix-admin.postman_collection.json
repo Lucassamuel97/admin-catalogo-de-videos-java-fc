@@ -1,8 +1,9 @@
 {
 	"info": {
 		"_postman_id": "8a6402c0-35d8-4cb9-9fa2-a7c4c209815c",
-		"name": "codeflix",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"name": "codeflix-admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7728204"
 	},
 	"item": [
 		{
@@ -214,8 +215,8 @@
 								"header": [
 									{
 										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
+										"value": "application/json",
+										"type": "text"
 									},
 									{
 										"key": "Content-Type",
@@ -263,8 +264,8 @@
 								"header": [
 									{
 										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
+										"value": "application/json",
+										"type": "text"
 									},
 									{
 										"key": "Content-Type",
@@ -382,7 +383,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Ação\",\r\n    \"categories_id\": [\r\n        \"68727f48-e332-45c8-8dd5-552c9fa0982f\"\r\n    ]\r\n}",
+									"raw": "{\r\n    \"name\": \"Ação\",\r\n    \"categories_id\": [\r\n        \"e061182543be4e64bd203df3d3c5018f\"\r\n    ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -602,6 +603,329 @@
 								}
 							},
 							"response": []
+						}
+					]
+				},
+				{
+					"name": "videos",
+					"item": [
+						{
+							"name": "List video",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/videos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"videos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create video without files",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"title\": \"title\",\n\t\"description\": \"description\",\n\t\"year_launched\": 2019,\n\t\"opened\": true,\n\t\"rating\": \"L\",\n\t\"duration\": 1,\n\t\"categories_id\": [\"1b9d317f-d2e9-4299-9aa8-bfa4ee2ed220\"],\n\t\"genres_id\": [\"1d9c7d47-0aac-4dab-a183-2c256ffcae32\"],\n\t\"cast_members_id\": [\"aba29a82-2eb7-4638-b65c-06b14ec07299\"]\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/videos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"videos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create video with files",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "Operação baba",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Um filme muito antigo e engra",
+											"type": "text"
+										},
+										{
+											"key": "year_launched",
+											"value": "2008",
+											"type": "text"
+										},
+										{
+											"key": "opened",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "rating",
+											"value": "L",
+											"type": "text"
+										},
+										{
+											"key": "duration",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "video_file",
+											"type": "file",
+											"src": "/C:/Users/Lucas Samuel/Pictures/f41529ca-24a6-4a3f-a70a-ad1929169e7a.jpg"
+										},
+										{
+											"key": "categories_id",
+											"value": "{{filme_id}}",
+											"type": "text"
+										},
+										{
+											"key": "trailer_file",
+											"type": "file",
+											"src": "/C:/Users/Lucas Samuel/Pictures/f41529ca-24a6-4a3f-a70a-ad1929169e7a.jpg"
+										},
+										{
+											"key": "banner_file",
+											"type": "file",
+											"src": "/C:/Users/Lucas Samuel/Pictures/f41529ca-24a6-4a3f-a70a-ad1929169e7a.jpg"
+										},
+										{
+											"key": "thumb_file",
+											"type": "file",
+											"src": "/C:/Users/Lucas Samuel/Pictures/f41529ca-24a6-4a3f-a70a-ad1929169e7a.jpg"
+										},
+										{
+											"key": "thumb_half_file",
+											"type": "file",
+											"src": "/C:/Users/Lucas Samuel/Pictures/f41529ca-24a6-4a3f-a70a-ad1929169e7a.jpg"
+										},
+										{
+											"key": "cast_members_id",
+											"value": "{{vin_diesel_id}}",
+											"type": "text"
+										},
+										{
+											"key": "genres_id",
+											"value": "{{action_id}}",
+											"type": "text"
+										},
+										{
+											"key": "published",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/videos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"videos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create video only files",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "video_file",
+											"type": "file",
+											"src": "08-Tema local com ChipYes e ChipNo - Camera.mp4"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/videos/3a273f13-84ff-487a-8f14-3053e15f9134",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"videos",
+										"3a273f13-84ff-487a-8f14-3053e15f9134"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update video",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"title\": \"title\",\n\t\"description\": \"description\",\n\t\"year_launched\": 2019,\n\t\"opened\": true,\n    \"published\": true,\n\t\"rating\": \"L\",\n\t\"duration\": 1,\n\t\"categories\": [\"3615c467aad845c98f10519756c7f637\"],\n\t\"genres\": [\"96e5c9f1a84a4a3aa6931d2db384e420\"],\n\t\"cast_members\": [\"61ca5f739f524dd7b92e3ef0daec0d40\"]\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/videos/ad79585e2405487ca03db29002955eeb",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"videos",
+										"ad79585e2405487ca03db29002955eeb"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete video",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"test1\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/videos/b1b2125b63c948e1bed276edbec7bb3e",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"videos",
+										"b1b2125b63c948e1bed276edbec7bb3e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get video",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/videos/ad79585e2405487ca03db29002955eeb",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"videos",
+										"ad79585e2405487ca03db29002955eeb"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
 						}
 					]
 				}
