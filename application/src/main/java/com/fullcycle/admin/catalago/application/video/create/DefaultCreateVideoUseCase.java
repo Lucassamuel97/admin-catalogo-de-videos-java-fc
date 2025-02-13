@@ -38,13 +38,14 @@ public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
             final CategoryGateway categoryGateway,
             final CastMemberGateway castMemberGateway,
             final GenreGateway genreGateway,
-            final VideoGateway videoGateway, MediaResourceGateway mediaResourceGateway
+            final MediaResourceGateway mediaResourceGateway,
+            final VideoGateway videoGateway
     ) {
         this.categoryGateway = Objects.requireNonNull(categoryGateway);
         this.castMemberGateway = Objects.requireNonNull(castMemberGateway);
         this.genreGateway = Objects.requireNonNull(genreGateway);
-        this.videoGateway = Objects.requireNonNull(videoGateway);
         this.mediaResourceGateway = Objects.requireNonNull(mediaResourceGateway);
+        this.videoGateway = Objects.requireNonNull(videoGateway);
     }
 
     @Override
