@@ -1,9 +1,10 @@
 package com.fullcycle.admin.catalago.domain.video;
 
+import com.fullcycle.admin.catalago.domain.UnitTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ImageMediaTest {
+public class ImageMediaTest extends UnitTest {
 
     @Test
     public void givenValidParams_whenCallsNewImage_ShouldReturnInstance() {
