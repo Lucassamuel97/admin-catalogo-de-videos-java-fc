@@ -1,26 +1,12 @@
 plugins {
-    id 'java'
+    id 'java-conventions'
+    id 'java-library'
 }
 
-group = 'com.fullcycle.admin.catalago.application'
-version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+group 'com.fullcycle.admin.catalago.application'
 
 dependencies {
     implementation(project(":domain"))
 
-    implementation group: 'io.vavr', name: 'vavr', version: '0.10.4'
-
     testImplementation(project(path: ':domain', configuration: 'testClasses'))
-
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.11.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
 }

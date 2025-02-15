@@ -1,5 +1,6 @@
 package com.fullcycle.admin.catalago.domain.video;
 
+import com.fullcycle.admin.catalago.domain.UnitTest;
 import com.fullcycle.admin.catalago.domain.castmember.CastMemberID;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.domain.exceptions.DomainException;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Year;
 import java.util.Set;
 
-public class VideoValidatorTest {
+public class VideoValidatorTest extends UnitTest {
 
     @Test
     public void givenNullTitle_whenCallsValidate_shouldReceiveError() {

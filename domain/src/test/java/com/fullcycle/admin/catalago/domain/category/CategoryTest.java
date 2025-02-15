@@ -1,12 +1,13 @@
 package com.fullcycle.admin.catalago.domain.category;
 
 
+import com.fullcycle.admin.catalago.domain.UnitTest;
 import com.fullcycle.admin.catalago.domain.exceptions.DomainException;
 import com.fullcycle.admin.catalago.domain.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CategoryTest{
+public class CategoryTest extends UnitTest {
 
     @Test
     public void givenAValidParams_whenCallNewCategory_thenInstantiateACategory() {
