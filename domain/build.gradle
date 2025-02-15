@@ -1,26 +1,12 @@
 plugins {
-    id 'java'
+    id 'java-conventions'
+    id 'java-library'
 }
 
-group = 'com.fullcycle.admin.catalago.domain'
-version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+group 'com.fullcycle.admin.catalago.domain'
 
 dependencies {
-    implementation group: 'io.vavr', name: 'vavr', version: '0.10.4'
-
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
-
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
 }
 
 configurations {

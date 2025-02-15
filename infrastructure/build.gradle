@@ -8,22 +8,18 @@ buildscript {
 }
 
 plugins {
-    id 'java'
+    id 'java-conventions'
     id 'application'
     id 'org.springframework.boot' version '2.7.7'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'org.flywaydb.flyway' version '9.11.0'
 }
 
-group = 'com.fullcycle.admin.catalago.infrastructure'
+group 'com.fullcycle.admin.catalago.infrastructure'
 
 bootJar {
     archiveFileName = 'application.jar'
     destinationDirectory.set(file("${rootProject.buildDir}/libs"))
-}
-
-repositories {
-    mavenCentral()  // Definir repositório Maven Central para resolver dependências do projeto
 }
 
 dependencies {
@@ -74,8 +70,4 @@ flyway {
     user = System.getenv('FLYWAY_USER') ?: 'root'
     password = System.getenv('FLYWAY_PASS') ?: '123456'
     cleanDisabled = false  // Habilitar temporariamente a opção clean
-}
-
-test {
-    useJUnitPlatform()
 }
