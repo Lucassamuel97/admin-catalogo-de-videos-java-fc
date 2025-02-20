@@ -6,7 +6,6 @@ on:
       - 'feat/**'
       - 'bugfix/**'
       - 'test/**'
-      - 'ci-cd'
   workflow_dispatch:
 
 jobs:
