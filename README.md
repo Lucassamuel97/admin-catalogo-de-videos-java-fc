@@ -21,7 +21,7 @@ A aplicação foi desenvolvida utilizando as seguintes tecnologias:
 
 - [DDD (Domain-Driven Design)](https://martinfowler.com/bliki/DomainDrivenDesign.html): Abordagem de design que enfatiza o domínio do negócio como base para a modelagem da aplicação.
 - [Notification Pattern](https://martinfowler.com/articles/replaceThrowWithNotification.html): Padrão que substitui exceções por notificações para melhor gerenciamento de erros e validações.
-- [Clean Architecture](https://github.com/luizomf/clean-architecture): Padrão de arquitetura que promove separação de responsabilidades e facilita manutenção.
+- [Clean Architecture](https://fullcycle.com.br/o-que-e-clean-architecture/): Padrão de arquitetura que promove separação de responsabilidades e facilita manutenção.
 
 Essas tecnologias foram escolhidas para garantir escalabilidade, modularidade e boas práticas no desenvolvimento da aplicação.
 
