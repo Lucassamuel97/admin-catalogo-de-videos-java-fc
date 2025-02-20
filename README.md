@@ -1,3 +1,5 @@
+<a target="_blank" href="https://hub.docker.com/repository/docker/lucassamuel/admin-catalogo-de-videos-java-fc"><img src="https://img.shields.io/badge/docker HUB-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white"/></a>
+
 #  Microserviço: Admin do Catálogo de Vídeos com Java
 
 Este repositório contem o Microserviço referente ao backend da Administração do Catálogo de Vídeos
@@ -21,7 +23,7 @@ A aplicação foi desenvolvida utilizando as seguintes tecnologias:
 
 - [DDD (Domain-Driven Design)](https://martinfowler.com/bliki/DomainDrivenDesign.html): Abordagem de design que enfatiza o domínio do negócio como base para a modelagem da aplicação.
 - [Notification Pattern](https://martinfowler.com/articles/replaceThrowWithNotification.html): Padrão que substitui exceções por notificações para melhor gerenciamento de erros e validações.
-- [Clean Architecture](https://github.com/luizomf/clean-architecture): Padrão de arquitetura que promove separação de responsabilidades e facilita manutenção.
+- [Clean Architecture](https://fullcycle.com.br/o-que-e-clean-architecture/): Padrão de arquitetura que promove separação de responsabilidades e facilita manutenção.
 
 Essas tecnologias foram escolhidas para garantir escalabilidade, modularidade e boas práticas no desenvolvimento da aplicação.
 
@@ -34,13 +36,18 @@ Essas tecnologias foram escolhidas para garantir escalabilidade, modularidade e 
     ```bash
     cd admin-catalogo-de-videos-java-fc
     ```
-3. Execute o container para subir o rabbitMQ e o Mysql:
-    ```bash
-    docker-compose up -d
-    ```
-4. Crie o .env atraves do .env.example e adicione suas credenciais:
+3. Crie o .env atraves do .env.example e adicione suas credenciais:
     ```bash
     GOOGLE_CLOUD_CREDENTIALS=
     GOOGLE_CLOUD_PROJECT=
     ```
+4. Execute o container para subir o rabbitMQ e o Mysql:
+    ```bash
+    docker-compose up -d
+    ```
+5. Execute a aplicação após o container mysql e rabbitMQ estarem ativos:
+    ```bash
+    docker compose --profile app up -d
+    ```
+    
     
