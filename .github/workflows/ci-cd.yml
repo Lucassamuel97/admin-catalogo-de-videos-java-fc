@@ -51,6 +51,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+
+      # Passo adiciona permissao do gradlew para execução no job build
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
       # 3. Valida a existência do gradle wrapper
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
