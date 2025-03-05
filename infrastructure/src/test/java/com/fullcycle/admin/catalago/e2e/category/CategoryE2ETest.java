@@ -1,5 +1,6 @@
 package com.fullcycle.admin.catalago.e2e.category;
 
+import com.fullcycle.admin.catalago.ApiTest;
 import com.fullcycle.admin.catalago.E2ETest;
 import com.fullcycle.admin.catalago.domain.category.CategoryID;
 import com.fullcycle.admin.catalago.e2e.MockDsl;
@@ -179,6 +180,7 @@ public class CategoryE2ETest implements MockDsl {
         Assertions.assertEquals(0, categoryRepository.count());
 
         final var aRequest = get("/categories/123")
+                .with(ApiTest.ADMIN_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -201,6 +203,7 @@ public class CategoryE2ETest implements MockDsl {
         final var aRequestBody = new UpdateCategoryRequest(expectedName, expectedDescription, expectedIsActive);
 
         final var aRequest = MockMvcRequestBuilders.put("/categories/"+actualId.getValue())
+                .with(ApiTest.ADMIN_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Json.writeValueAsString(aRequestBody));
 
