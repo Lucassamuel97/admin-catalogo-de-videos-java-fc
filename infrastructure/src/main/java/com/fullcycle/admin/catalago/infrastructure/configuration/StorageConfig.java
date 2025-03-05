@@ -35,5 +35,4 @@ public class StorageConfig {
     ) {
         return new GCStorageService(props.getBucket(), storage);
     }
-
 }
