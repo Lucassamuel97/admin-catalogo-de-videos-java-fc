@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 @EnableWebSecurity
 // Habilita a segurança a nível de método (@Secured e @RolesAllowed)
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@Profile("!development")
 public class SecurityConfig {
 
     // Definição de constantes para representar os papéis (roles) do sistema

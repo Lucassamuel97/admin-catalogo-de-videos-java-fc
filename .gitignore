@@ -5,6 +5,7 @@ build/
 !**/src/test/**/build/
 .env
 .env.local
+sandbox/.docker
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
