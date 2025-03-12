@@ -1,9 +1,10 @@
+
 version: '3.7'
 
 services:
   app:
     container_name: adm_videos_app
-    #    image: deploydesexta/fc3-admin-catalogo-de-videos-java:modulos_29_ci-cd-2
+    #    image: lucassamuel/admin-catalogo-de-videos-java-fc:main-7
     build:
       context: ../../
       dockerfile: Dockerfile.dev
@@ -15,6 +16,27 @@ services:
     networks:
       - adm_videos_network
       - adm_videos_services
+    depends_on:
+      - filebeat
+    labels:
+      filebeat_collector: true
+    extra_hosts:
+      - "keycloak.internal:127.0.0.1"
+
+  filebeat:
+    container_name: adm_videos_filebeat
+    image: docker.elastic.co/beats/filebeat:7.17.9
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro           # Docker logs
+      - /var/run/docker.sock:/var/run/docker.sock:ro                       # Additional information about containers
+      - ./filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml    # Configuration file
+      - ../.docker/filebeat:/usr/share/filebeat/data:rw                    # Persistence data
+    user: root                                                            # Allow access to log files and docker.sock
+    entrypoint: [ "/bin/sh", "-c", "chmod go-w /usr/share/filebeat/filebeat.yml && exec filebeat" ]
+    restart: on-failure
+    networks:
+      - adm_videos_network
+      - elastic
 
 networks:
   adm_videos_network:
