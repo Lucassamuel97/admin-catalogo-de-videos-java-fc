@@ -38,17 +38,21 @@ services:
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KEYCLOAK_IMPORT=/opt/keycloak/data/import/realm-export.json
+      - KC_HOSTNAME=keycloak
+      - KC_HOSTNAME_STRICT_HTTPS=false
+      - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/certs/cert.pem
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/certs/key.pem
     ports:
-      - 8443:8443
+      - "8443:8443"
     command:
-      #      - start-dev # Utilizar esse comando quando a aplicação estiver executando fora do Docker
-      - start-dev --http-port=8443 --hostname-url=http://keycloak.internal:8443 # Utilizar esse comando quando a aplicação estiver dentro do Docker
+      - start-dev --import-realm --optimized --hostname-strict=false
     volumes:
-      - ../.docker/keycloak:/opt/keycloak/data/h2:rw
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
+      - ../.docker/keycloak/certs:/opt/keycloak/certs:ro
+      - ../.docker/keycloak_data:/opt/keycloak/data:rw
     networks:
       - adm_videos_services
-    extra_hosts:
-      - "keycloak.internal:127.0.0.1"
 
 networks:
   adm_videos_services:

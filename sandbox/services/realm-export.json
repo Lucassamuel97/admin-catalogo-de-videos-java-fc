@@ -1,0 +1,73 @@
+{
+  "realm": "fc3-codeflix",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "fc3-admin-catalogo-de-videos",
+      "secret": "my-client-secret",
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "defaultClientScopes": [
+        "openid",
+        "profile",
+        "email",
+        "roles",
+        "web-origins"
+      ],
+      "optionalClientScopes": []
+    }
+  ],
+  "roles": {
+    "realm": [
+    ],
+    "client": {
+      "fc3-admin-catalogo-de-videos": [
+        {
+          "name": "admin"
+        },
+        {
+          "name": "cast_members"
+        },
+        {
+          "name": "categories"
+        },
+        {
+          "name": "genres"
+        },
+        {
+          "name": "videos"
+        }
+      ]
+    }
+  },
+  "groups": [
+    {
+      "name": "catalogo-admin",
+      "clientRoles": {
+        "fc3-admin-catalogo-de-videos": [
+          "admin",
+          "cast_members",
+          "categories",
+          "genres",
+          "videos"
+        ]
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "myuser",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "123456",
+          "temporary": false
+        }
+      ],
+      "groups": ["catalogo-admin"]
+    }
+  ]
+}

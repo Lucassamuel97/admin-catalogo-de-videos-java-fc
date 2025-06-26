@@ -1,7 +1,3 @@
-# To build and run:
-# docker build -f Dockerfile.dev -t fc3-admin-do-catalogo .
-# docker run fc3-admin-do-catalogo
-
 # build stage
 FROM gradle:7.6.1-jdk17-alpine AS builder
 
@@ -14,9 +10,41 @@ RUN gradle bootJar
 # build runtime
 FROM eclipse-temurin:17.0.5_8-jre-alpine
 
+# Adiciona ferramentas de debug e o shell 'bash'
+# e 'curl' para testes de conectividade SSL
+RUN apk add --no-cache bash curl
+
+# Cria um diretório para o certificado (se ainda não existir por COPY)
+RUN mkdir -p /certs
+
+# Copia o certificado do Keycloak gerado pelo seu script run.sh
+# É importante que 'keycloak-cert.pem' esteja no contexto do build
+# (onde você executa 'docker build').
+# O script run.sh já copia o cert.pem para keycloak-cert.pem no root do sandbox.
+COPY keycloak-cert.pem /certs/keycloak-cert.pem
+
+# Define a senha do keystore JVM (padrão)
+ENV CACERTS_PASSWORD changeit
+
+# Importa o certificado para o truststore da JVM
+# Note: Para imagens Alpine, o JAVA_HOME geralmente aponta para /opt/java/openjdk
+# e o cacerts está em /opt/java/openjdk/lib/security/cacerts
+# Certifique-se de que o usuário 'root' esteja ativo para este comando,
+# pois 'spring:spring' pode não ter permissão para modificar o cacerts.
+USER root
+RUN keytool -import -trustcacerts -alias keycloak-dev-cert \
+    -file /certs/keycloak-cert.pem \
+    -keystore /opt/java/openjdk/lib/security/cacerts \
+    -storepass ${CACERTS_PASSWORD} \
+    -noprompt
+USER spring:spring # Retorna para o usuário 'spring' com menos privilégios
+
+# Copia o JAR da aplicação do estágio de build
 COPY --from=builder /usr/app/build/libs/*.jar /opt/app/application.jar
 
+# Define o grupo e usuário para rodar a aplicação
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 
-CMD java -jar /opt/app/application.jar
+# Comando para rodar a aplicação
+CMD ["java", "-jar", "/opt/app/application.jar"]

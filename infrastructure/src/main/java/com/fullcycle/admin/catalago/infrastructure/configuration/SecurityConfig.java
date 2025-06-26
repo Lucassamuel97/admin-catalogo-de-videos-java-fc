@@ -32,11 +32,14 @@ import java.util.stream.Stream;
 public class SecurityConfig {
 
     // Definição de constantes para representar os papéis (roles) do sistema
-    private static final String ROLE_ADMIN = "CATALOGO_ADMIN";
-    private static final String ROLE_CAST_MEMBERS = "CATALOGO_CAST_MEMBERS";
-    private static final String ROLE_CATEGORIES = "CATALOGO_CATEGORIES";
-    private static final String ROLE_GENRES = "CATALOGO_GENRES";
-    private static final String ROLE_VIDEOS = "CATALOGO_VIDEOS";
+    // Em SecurityConfig
+    private static final String CLIENT_ID = "fc3-admin-catalogo-de-videos";
+
+    private static final String ROLE_ADMIN = CLIENT_ID + "_admin";
+    private static final String ROLE_CAST_MEMBERS = CLIENT_ID + "_cast_members";
+    private static final String ROLE_CATEGORIES = CLIENT_ID + "_categories";
+    private static final String ROLE_GENRES = CLIENT_ID + "_genres";
+    private static final String ROLE_VIDEOS = CLIENT_ID + "_videos";
 
     // Método que define a configuração da segurança da aplicação
     @Bean
@@ -140,7 +143,8 @@ public class SecurityConfig {
                         final var roles = (Collection<String>) value.get(ROLES);
 
                         // Concatena o nome do recurso com a role (ex: "catalogo_admin")
-                        return roles.stream().map(role -> key.concat(SEPARATOR).concat(role));
+                        // Certifique-se de que a role também esteja em maiúsculas antes da concatenação
+                        return roles.stream().map(role -> key.concat(SEPARATOR).concat(role.toUpperCase()));
                     };
 
             final Function<Set<Map.Entry<String, Object>>, Collection<String>> mapResources =
